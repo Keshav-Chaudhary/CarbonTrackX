@@ -18,6 +18,7 @@ import { useCarbonStore, STORAGE_KEY } from "@/lib/store/carbon-store";
 import { BENCHMARKS } from "@/lib/insights/analyze";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { PageHeader } from "@/components/app/PageHeader";
+import { useHydrated } from "@/components/useHydrated";
 import { Button, Dialog, formatKg } from "@/components/ui";
 import { useToast } from "@/components/ui";
 import { cn } from "@/lib/cn";
@@ -86,6 +87,7 @@ function StatPill({ label, value }: { label: string; value: string }) {
 
 /* ─── Main component ────────────────────────────────────── */
 export function SettingsClient() {
+  const hydrated = useHydrated();
   const { theme, toggleTheme } = useTheme();
   const { toast } = useToast();
 
@@ -278,7 +280,7 @@ export function SettingsClient() {
           />
           <StatPill
             label="Storage"
-            value={`${(JSON.stringify(localStorage?.getItem?.(STORAGE_KEY) ?? "").length / 1024).toFixed(1)} KB`}
+            value={hydrated && typeof window !== "undefined" ? `${(JSON.stringify(localStorage.getItem(STORAGE_KEY) ?? "").length / 1024).toFixed(1)} KB` : "0.0 KB"}
           />
         </div>
 
