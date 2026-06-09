@@ -532,14 +532,14 @@ export function LogClient() {
                     Export JSON
                   </Button>
                   <label className="group relative overflow-hidden rounded-xl border border-[var(--border-faint)] bg-surface-2 p-6 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col h-fit cursor-pointer">
-                    <span className="mb-2 flex items-center gap-2 font-semibold text-gray-900 dark:text-white">
+                    <span className="mb-2 flex items-center gap-2 font-semibold text-fg">
                       <Upload className="size-4 text-[var(--accent)]" />
                       Import Data
                     </span>
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                    <span className="text-sm text-fg-muted">
                       Restore activities from a JSON file.
                     </span>
-                    <span className="mt-4 inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-xl border border-[var(--border-strong)] bg-transparent px-4 text-sm font-semibold text-gray-900 dark:text-white transition-all hover:border-[var(--fg-subtle)] hover:bg-surface-2">
+                    <span className="mt-4 inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-xl border border-[var(--border-strong)] bg-transparent px-4 text-sm font-semibold text-fg transition-all hover:border-[var(--fg-subtle)] hover:bg-surface-2">
                       Choose File
                     </span>
                     <input
@@ -560,11 +560,11 @@ export function LogClient() {
             <div className="relative z-10 flex flex-col h-full">
               <div className="mb-4 flex items-center gap-2">
                 <Lightbulb className="size-5 text-[var(--accent)] animate-pulse" />
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">Did you know?</h2>
+                <h2 className="text-lg font-bold text-fg">Did you know?</h2>
               </div>
               <div className="h-[120px] relative mt-2">
                 <p 
-                  className={`absolute inset-x-0 top-0 text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed transition-all duration-500 ease-in-out ${
+                  className={`absolute inset-x-0 top-0 text-sm text-fg-muted italic leading-relaxed transition-all duration-500 ease-in-out ${
                     fadeTip ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
                   }`}
                 >
