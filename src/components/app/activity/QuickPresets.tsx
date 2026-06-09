@@ -1,7 +1,7 @@
 "use client";
 
 import { Sparkles } from "lucide-react";
-import { PRESETS } from "./log-constants";
+import { PRESETS } from "../log/log-constants";
 
 interface QuickPresetsProps {
   onSelectPreset: (preset: typeof PRESETS[number]) => void;

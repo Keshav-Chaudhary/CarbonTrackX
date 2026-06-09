@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     "coverage/**",
     "playwright-report/**",
     "test-results/**",
+    // Scratch scripts used for local diagnostics only.
+    "scratch/**",
   ]),
 ]);
 

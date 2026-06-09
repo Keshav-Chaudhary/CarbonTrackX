@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Lightbulb } from "lucide-react";
-import { ECO_TIPS } from "./log-constants";
+import { ECO_TIPS } from "../log/log-constants";
 
 export function EcoTipCard() {
   const [currentTipIndex, setCurrentTipIndex] = useState(0);

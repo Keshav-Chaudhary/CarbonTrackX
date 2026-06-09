@@ -13,7 +13,7 @@ const LEVEL_META: Record<
   info: { label: "Observation", tone: "info", icon: Lightbulb },
 };
 
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/ui/toast/Toast";
 import { useCarbonStore } from "@/lib/store/carbon-store";
 
 /**

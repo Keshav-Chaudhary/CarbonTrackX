@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { Lightbulb, Globe, Target, TrendingDown } from "lucide-react";
 import { BENCHMARKS } from "@/lib/insights/analyze";
-import { useFootprint } from "@/components/app/useFootprint";
-import { PageHeader } from "@/components/app/PageHeader";
-import { InsightList } from "@/components/app/InsightList";
+import { useFootprint } from "@/components/app/shared/useFootprint";
+import { PageHeader } from "@/components/app/shared/PageHeader";
+import { InsightList } from "./InsightList";
 import {
   formatKg,
 } from "@/components/ui";
-import { PageSkeleton } from "@/components/app/Skeletons";
+import { PageSkeleton } from "@/components/app/shared/Skeletons";
 
 
 export function InsightsClient() {

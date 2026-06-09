@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { Markdown } from "@/components/app/Markdown";
+import { Markdown } from "@/components/app/shared/Markdown";
 
 describe("Markdown", () => {
   it("renders plain text in a paragraph", () => {

@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
@@ -36,14 +35,7 @@ function readAppliedTheme(): Theme {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
-
-  // Sync React state with whatever the no-flash script applied to <html>.
-  // This is a deliberate one-time hydration sync from the DOM, not derived state.
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setThemeState(readAppliedTheme());
-  }, []);
+  const [theme, setThemeState] = useState<Theme>(readAppliedTheme);
 
   const setTheme = useCallback((next: Theme) => {
     setThemeState(next);

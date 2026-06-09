@@ -1,5 +1,5 @@
 import { MarketingHeader } from "@/components/marketing/MarketingHeader";
-import { MarketingFooter } from "@/components/marketing/MarketingFooter";
+import { MarketingFooter } from "@/components/marketing/footer/MarketingFooter";
 
 /** Shell for public marketing/info pages: header, content, footer. */
 export default function MarketingLayout({

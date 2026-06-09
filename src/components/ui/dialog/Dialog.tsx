@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallbackRef } from "@/components/ui/useCallbackRef";
-import { useEffect, useRef, useState } from "react";
+import { useCallbackRef } from "@/components/ui/dialog/useCallbackRef";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Button } from "./Button";
+import { Button } from "../Button";
 
 interface DialogProps {
   open: boolean;
@@ -85,9 +85,11 @@ export function Dialog({
     };
   }, [open, onCloseStable]);
 
-  const [mounted, setMounted] = useState(false);
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setMounted(true), []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   if (!open || !mounted) return null;
 

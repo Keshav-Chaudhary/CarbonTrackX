@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { InsightsClient } from "@/components/app/InsightsClient";
+import { InsightsClient } from "@/components/app/insights/InsightsClient";
 
 export const metadata: Metadata = {
   title: "Insights",

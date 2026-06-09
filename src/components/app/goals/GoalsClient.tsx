@@ -1,10 +1,10 @@
 "use client";
 
 import { useCarbonStore } from "@/lib/store/carbon-store";
-import { useFootprint } from "@/components/app/useFootprint";
-import { PageHeader } from "@/components/app/PageHeader";
-import { GoalSetter } from "@/components/app/GoalSetter";
-import { DashboardSkeleton } from "@/components/app/Skeletons";
+import { useFootprint } from "@/components/app/shared/useFootprint";
+import { PageHeader } from "@/components/app/shared/PageHeader";
+import { GoalSetter } from "./GoalSetter";
+import { DashboardSkeleton } from "@/components/app/shared/Skeletons";
 import { ProgressRing, formatKg } from "@/components/ui";
 import { Trophy, TrendingDown } from "lucide-react";
 import { BENCHMARKS } from "@/lib/insights/analyze";
