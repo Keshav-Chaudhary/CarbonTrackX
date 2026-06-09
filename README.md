@@ -5,11 +5,7 @@ CarbonTrackX is a high-performance, ultra-premium web application designed to tr
 The application is styled from the ground up using a modern, dark-first **"Bento Box" glassmorphism** theme with a consistent design language across every page — featuring smooth staggered entrance animations (`rise` + `fade-in`), hover glow effects, rounded bento cards, and a fully premium responsive layout.
 
 <div align="center">
-  <h3>🔥 Try CarbonTrackX Live!</h3>
-  <a href="https://app.supademo.com/demo/cmq6ope4m4xg5qm6uoh67y6xi?preview=true&step=1" target="_blank">
-    <img src="https://img.shields.io/badge/Launch%20Interactive%20Demo-10b981?style=for-the-badge&logo=youtube&logoColor=white" alt="Interactive Demo" />
-  </a>
-  <p><em>Click the button above to explore the interactive walkthrough.</em></p>
+  <video src="./public/Demo_Promptwars_3.mp4" controls width="800" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></video>
 </div>
 
 ---
