@@ -20,11 +20,11 @@ The application is styled from the ground up using a modern, dark-first Bento Bo
 
 ## AI Evaluation Scores
 
-We are proud to share that CarbonTrackX achieves a perfect **100/100** score in the AI evaluation suite across all engineering and quality parameters:
+We are proud to share that CarbonTrackX achieves a perfect **100/100** score in the AI evaluation suite across all engineering Except Code Quality parameters:
 
 | Category | Score | Audit Reference |
 | :--- | :---: | :--- |
-| **Code Quality** | 100/100 | [CODE_QUALITY.md](file:///d:/Side_Projects/001_H2Skill/PromptWars_Challenge3/CODE_QUALITY.md) |
+| **Code Quality** | 89/100 | [CODE_QUALITY.md](file:///d:/Side_Projects/001_H2Skill/PromptWars_Challenge3/CODE_QUALITY.md) |
 | **Security** | 100/100 | [SECURITY.md](file:///d:/Side_Projects/001_H2Skill/PromptWars_Challenge3/SECURITY.md) |
 | **Efficiency** | 100/100 | [EFFICIENCY.md](file:///d:/Side_Projects/001_H2Skill/PromptWars_Challenge3/EFFICIENCY.md) |
 | **Testing** | 100/100 | [TESTING.md](file:///d:/Side_Projects/001_H2Skill/PromptWars_Challenge3/TESTING.md) |
