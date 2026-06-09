@@ -96,9 +96,9 @@ describe("CATEGORY_META", () => {
 });
 
 describe("CATEGORIES", () => {
-  it("contains the four expected verticals", () => {
+  it("contains the expected verticals", () => {
     expect([...CATEGORIES].sort()).toEqual(
-      ["diet", "energy", "shopping", "transport"].sort(),
+      ["custom", "diet", "energy", "shopping", "transport", "waste"].sort(),
     );
   });
 

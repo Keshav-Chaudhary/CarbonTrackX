@@ -8,10 +8,11 @@ import { getAIConfig, isAIEnabled, FALLBACK_MODELS } from "@/lib/ai/config";
  */
 
 const KEYS = [
-  "DO_INFERENCE_API_KEY",
-  "DO_INFERENCE_BASE_URL",
-  "DO_INFERENCE_MODEL",
-  "DO_INFERENCE_TIMEOUT_MS",
+  "GEMINI_API_KEY",
+  "GOOGLE_API_KEY",
+  "GEMINI_BASE_URL",
+  "GEMINI_MODEL",
+  "GEMINI_TIMEOUT_MS",
 ] as const;
 
 let saved: Record<string, string | undefined>;
@@ -37,55 +38,56 @@ describe("getAIConfig", () => {
   });
 
   it("returns null when the API key is blank or whitespace", () => {
-    process.env.DO_INFERENCE_API_KEY = "   ";
+    process.env.GEMINI_API_KEY = "   ";
+    process.env.GOOGLE_API_KEY = "   ";
     expect(getAIConfig()).toBeNull();
   });
 
   it("resolves config when a key is present", () => {
-    process.env.DO_INFERENCE_API_KEY = "secret-key";
+    process.env.GEMINI_API_KEY = "secret-key";
     const config = getAIConfig();
     expect(config).not.toBeNull();
     expect(config?.apiKey).toBe("secret-key");
   });
 
-  it("defaults to the DigitalOcean inference base URL", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
-    expect(getAIConfig()?.baseURL).toBe("https://inference.do-ai.run/v1");
+  it("defaults to the Gemini API base URL", () => {
+    process.env.GEMINI_API_KEY = "k";
+    expect(getAIConfig()?.baseURL).toBe("https://generativelanguage.googleapis.com/v1beta/openai");
   });
 
   it("strips a trailing slash from a custom base URL", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
-    process.env.DO_INFERENCE_BASE_URL = "https://example.com/v1/";
+    process.env.GEMINI_API_KEY = "k";
+    process.env.GEMINI_BASE_URL = "https://example.com/v1/";
     expect(getAIConfig()?.baseURL).toBe("https://example.com/v1");
   });
 
   it("uses the default fallback model chain when no model is set", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
+    process.env.GEMINI_API_KEY = "k";
     expect(getAIConfig()?.models).toEqual(FALLBACK_MODELS);
   });
 
   it("prepends an explicit model and dedupes it from the fallback chain", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
-    process.env.DO_INFERENCE_MODEL = FALLBACK_MODELS[1];
+    process.env.GEMINI_API_KEY = "k";
+    process.env.GEMINI_MODEL = FALLBACK_MODELS[1];
     const models = getAIConfig()?.models ?? [];
     expect(models[0]).toBe(FALLBACK_MODELS[1]);
     expect(models.filter((m) => m === FALLBACK_MODELS[1])).toHaveLength(1);
   });
 
   it("defaults the timeout to 30 seconds", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
+    process.env.GEMINI_API_KEY = "k";
     expect(getAIConfig()?.timeoutMs).toBe(30_000);
   });
 
   it("respects a custom timeout", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
-    process.env.DO_INFERENCE_TIMEOUT_MS = "5000";
+    process.env.GEMINI_API_KEY = "k";
+    process.env.GEMINI_TIMEOUT_MS = "5000";
     expect(getAIConfig()?.timeoutMs).toBe(5000);
   });
 
   it("falls back to the default timeout for an invalid value", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
-    process.env.DO_INFERENCE_TIMEOUT_MS = "not-a-number";
+    process.env.GEMINI_API_KEY = "k";
+    process.env.GEMINI_TIMEOUT_MS = "not-a-number";
     expect(getAIConfig()?.timeoutMs).toBe(30_000);
   });
 });
@@ -96,7 +98,7 @@ describe("isAIEnabled", () => {
   });
 
   it("is true with a key", () => {
-    process.env.DO_INFERENCE_API_KEY = "k";
+    process.env.GEMINI_API_KEY = "k";
     expect(isAIEnabled()).toBe(true);
   });
 });
