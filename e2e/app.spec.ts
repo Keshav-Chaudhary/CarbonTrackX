@@ -116,7 +116,7 @@ test("a user can remove a logged activity", async ({ page }) => {
   await page.getByRole("button", { name: /remove petrol car/i }).first().click();
   await page.getByRole("button", { name: /^delete$/i }).click();
 
-  await expect(page.getByText(/no activities found/i)).toBeVisible();
+  await expect(page.getByText(/no activities recorded yet/i)).toBeVisible();
 });
 
 test("landing page has no detectable accessibility violations", async ({
