@@ -19,6 +19,7 @@ The application is styled from the ground up using a modern, dark-first Bento Bo
 ---
 
 ## AI Evaluation Scores
+<img width="1230" height="443" alt="image" src="https://github.com/user-attachments/assets/d45de00d-962a-47e6-b2bc-e5bbf7c55e20" />
 
 We are proud to share that CarbonTrackX achieves a perfect **100/100** score in the AI evaluation suite across all engineering Except Code Quality parameters:
 
