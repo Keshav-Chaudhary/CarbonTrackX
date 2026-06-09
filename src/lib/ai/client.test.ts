@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vitest";
-import { parseSSEStream } from "@/lib/ai/client";
+import { describe, expect, it, vi } from "vitest";
+import { parseSSEStream, streamChat, AINotConfiguredError } from "@/lib/ai/client";
+import type { AIConfig } from "@/lib/ai/config";
 
 /** Build a ReadableStream from string chunks for testing the SSE parser. */
 function streamFrom(chunks: string[]): ReadableStream<Uint8Array> {
@@ -54,5 +55,111 @@ describe("parseSSEStream", () => {
       'data: {"choices":[{"delta":{"content":"tail"}}]}',
     ]);
     expect(await collect(parseSSEStream(stream))).toBe("tail");
+  });
+});
+
+describe("streamChat", () => {
+  it("streams chat content successfully with fallback models", async () => {
+    const mockConfig: AIConfig = {
+      baseURL: "http://mock-api.com",
+      apiKey: "mock-key",
+      models: ["model-1", "model-2"],
+      timeoutMs: 1000,
+    };
+    
+    let fetchCount = 0;
+    const mockFetch = vi.fn().mockImplementation((url, init) => {
+      fetchCount++;
+      const body = JSON.parse(init.body);
+      if (body.model === "model-1") {
+        return Promise.resolve({
+          ok: false,
+          status: 500,
+        });
+      }
+      return Promise.resolve({
+        ok: true,
+        body: streamFrom([
+          'data: {"choices":[{"delta":{"content":"Success"}}]}\n\n',
+          "data: [DONE]\n\n",
+        ]),
+      });
+    });
+    vi.stubGlobal("fetch", mockFetch);
+
+    const gen = streamChat([{ role: "user", content: "Hi" }], mockConfig);
+    const result = await collect(gen);
+    
+    expect(result).toBe("Success");
+    expect(fetchCount).toBe(2);
+    vi.unstubAllGlobals();
+  });
+
+  it("throws error when all models fail", async () => {
+    const mockConfig: AIConfig = {
+      baseURL: "http://mock-api.com",
+      apiKey: "mock-key",
+      models: ["model-1"],
+      timeoutMs: 1000,
+    };
+    
+    const mockFetch = vi.fn().mockImplementation(() => {
+      return Promise.reject(new Error("Network Error"));
+    });
+    vi.stubGlobal("fetch", mockFetch);
+
+    const gen = streamChat([{ role: "user", content: "Hi" }], mockConfig);
+    await expect(async () => {
+      for await (const chunk of gen) {
+        expect(chunk).toBeDefined();
+      }
+    }).rejects.toThrow("All AI models failed. Last error: Network Error");
+    vi.unstubAllGlobals();
+  });
+
+  it("throws AINotConfiguredError when getAIConfig returns null", async () => {
+    const originalApiKey = process.env.GEMINI_API_KEY;
+    const originalGoogleApiKey = process.env.GOOGLE_API_KEY;
+    delete process.env.GEMINI_API_KEY;
+    delete process.env.GOOGLE_API_KEY;
+
+    await expect(async () => {
+      const gen = streamChat([{ role: "user", content: "Hi" }]);
+      for await (const chunk of gen) {
+        expect(chunk).toBeDefined();
+      }
+    }).rejects.toThrow(AINotConfiguredError);
+
+    process.env.GEMINI_API_KEY = originalApiKey;
+    process.env.GOOGLE_API_KEY = originalGoogleApiKey;
+  });
+
+  it("calls getAIConfigOrThrow default parameter when config is not provided", async () => {
+    const originalApiKey = process.env.GEMINI_API_KEY;
+    process.env.GEMINI_API_KEY = "test-key";
+    
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      body: streamFrom([
+        'data: {"choices":[{"delta":{"content":"Default success"}}]}\n\n',
+        "data: [DONE]\n\n",
+      ]),
+    });
+    vi.stubGlobal("fetch", mockFetch);
+
+    const gen = streamChat([{ role: "user", content: "Hi" }]);
+    const result = await collect(gen);
+    expect(result).toBe("Default success");
+
+    vi.unstubAllGlobals();
+    process.env.GEMINI_API_KEY = originalApiKey;
+  });
+});
+
+describe("AINotConfiguredError", () => {
+  it("constructs AINotConfiguredError correctly", () => {
+    const err = new AINotConfiguredError();
+    expect(err.message).toBe("AI assistant is not configured");
+    expect(err.name).toBe("AINotConfiguredError");
   });
 });

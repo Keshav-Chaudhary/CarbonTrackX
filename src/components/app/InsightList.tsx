@@ -20,8 +20,17 @@ import { useCarbonStore } from "@/lib/store/carbon-store";
  * Renders the deterministic engine's recommendations as a list of cards. Each
  * card shows a clearly labelled level badge (meaning is not colour-only), the
  * advice text, and the quantified potential saving where one was computed.
+ * Supports a `compact` mode to prevent dashboard Bento layout breakage.
  */
-export function InsightList({ insights, dailyAverageKg }: { insights: Insight[], dailyAverageKg?: number }) {
+export function InsightList({
+  insights,
+  dailyAverageKg,
+  compact = false,
+}: {
+  insights: Insight[];
+  dailyAverageKg?: number;
+  compact?: boolean;
+}) {
   const { toast } = useToast();
   const currentGoal = useCarbonStore((s) => s.goal);
   const setGoal = useCarbonStore((s) => s.setGoal);
@@ -50,21 +59,25 @@ export function InsightList({ insights, dailyAverageKg }: { insights: Insight[],
         return (
           <li
             key={insight.id}
-            className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-6 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]"
+            className={`group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] ${
+              compact ? "p-4" : "p-6"
+            }`}
           >
             <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--accent-subtle)] blur-[40px] opacity-0 transition-all group-hover:scale-150 group-hover:opacity-100" />
             <div className="flex items-start gap-3">
               <span
                 aria-hidden="true"
-                className="relative mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface-3 border border-[var(--border)] group-hover:text-[var(--accent)] transition-colors"
+                className={`relative mt-0.5 flex shrink-0 items-center justify-center rounded-xl bg-surface-3 border border-[var(--border)] group-hover:text-[var(--accent)] transition-colors ${
+                  compact ? "size-8" : "size-10"
+                }`}
               >
-                <CatIcon className="size-5 text-fg-muted group-hover:text-[var(--accent)]" />
+                <CatIcon className={compact ? "size-4 text-fg-muted group-hover:text-[var(--accent)]" : "size-5 text-fg-muted group-hover:text-[var(--accent)]"} />
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex flex-col gap-1">
-                    <h3 className="font-semibold text-fg">{insight.title}</h3>
-                    {insight.confidence && (
+                    <h3 className={`font-semibold text-fg ${compact ? "text-sm" : "text-base"}`}>{insight.title}</h3>
+                    {insight.confidence && !compact && (
                       <span className="text-[10px] font-medium tracking-wider text-fg-muted uppercase">
                         {insight.confidence} Confidence
                       </span>
@@ -72,8 +85,9 @@ export function InsightList({ insights, dailyAverageKg }: { insights: Insight[],
                   </div>
                   <Badge tone={meta.tone}>{meta.label}</Badge>
                 </div>
-                <p className="mt-1 text-sm text-fg-muted">{insight.detail}</p>
-                {insight.reasoning && (
+                <p className={`mt-1 text-fg-muted ${compact ? "text-xs" : "text-sm"}`}>{insight.detail}</p>
+                
+                {insight.reasoning && !compact && (
                   <div className="relative mt-3 rounded-xl bg-surface-1 p-3 border border-[var(--border-strong)] shadow-inner">
                     <p className="text-sm text-fg-subtle">
                       <span className="font-bold text-fg mr-2">Analysis:</span>
@@ -81,39 +95,54 @@ export function InsightList({ insights, dailyAverageKg }: { insights: Insight[],
                     </p>
                   </div>
                 )}
+                
                 {typeof insight.potentialSavingKg === "number" &&
                   insight.potentialSavingKg > 0 && (
-                    <div className="mt-4 flex flex-col gap-3 rounded-xl bg-surface-1 p-4 border border-[var(--border-strong)]">
-                      <div className="flex items-center justify-between">
-                        <p className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--positive)]">
-                          <TrendingDown aria-hidden="true" className="size-4" />
-                          Save up to {formatKg(insight.potentialSavingKg)} CO2e
+                    compact ? (
+                      <div className="mt-2 flex items-center justify-between">
+                        <p className="inline-flex items-center gap-1 text-xs font-bold text-[var(--positive)]">
+                          <TrendingDown aria-hidden="true" className="size-3.5" />
+                          Save up to {formatKg(insight.potentialSavingKg)}
                         </p>
-                        {dailyAverageKg && dailyAverageKg > 0 ? (
-                          <span className="text-xs font-semibold text-fg-muted">
-                            {Math.min(100, Math.round((insight.potentialSavingKg / dailyAverageKg) * 100))}% of daily impact
+                        {dailyAverageKg && dailyAverageKg > 0 && (
+                          <span className="text-[10px] text-fg-subtle font-medium">
+                            {Math.min(100, Math.round((insight.potentialSavingKg / dailyAverageKg) * 100))}% of daily
                           </span>
-                        ) : null}
+                        )}
                       </div>
-                      
-                      {dailyAverageKg && dailyAverageKg > 0 ? (
-                        <div className="h-1.5 w-full bg-surface-3 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-[var(--positive)] rounded-full transition-all duration-1000 shadow-[0_0_10px_var(--positive)]" 
-                            style={{ width: `${Math.min(100, Math.round((insight.potentialSavingKg / dailyAverageKg) * 100))}%` }} 
-                          />
+                    ) : (
+                      <div className="mt-4 flex flex-col gap-3 rounded-xl bg-surface-1 p-4 border border-[var(--border-strong)]">
+                        <div className="flex items-center justify-between">
+                          <p className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--positive)]">
+                            <TrendingDown aria-hidden="true" className="size-4" />
+                            Save up to {formatKg(insight.potentialSavingKg)} CO2e
+                          </p>
+                          {dailyAverageKg && dailyAverageKg > 0 ? (
+                            <span className="text-xs font-semibold text-fg-muted">
+                              {Math.min(100, Math.round((insight.potentialSavingKg / dailyAverageKg) * 100))}% of daily impact
+                            </span>
+                          ) : null}
                         </div>
-                      ) : null}
+                        
+                        {dailyAverageKg && dailyAverageKg > 0 ? (
+                          <div className="h-1.5 w-full bg-surface-3 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-[var(--positive)] rounded-full transition-all duration-1000 shadow-[0_0_10px_var(--positive)]" 
+                              style={{ width: `${Math.min(100, Math.round((insight.potentialSavingKg / dailyAverageKg) * 100))}%` }} 
+                            />
+                          </div>
+                        ) : null}
 
-                      <div className="mt-2 flex justify-end">
-                        <button 
-                          onClick={() => handleCommit(insight)}
-                          className="text-xs font-bold bg-[var(--accent)] text-[var(--accent-fg)] px-4 py-2 rounded-lg hover:bg-[var(--accent-strong)] hover:scale-105 transition-all shadow-[0_0_10px_var(--accent-line)]"
-                        >
-                          Commit to Change
-                        </button>
+                        <div className="mt-2 flex justify-end">
+                          <button 
+                            onClick={() => handleCommit(insight)}
+                            className="text-xs font-bold bg-[var(--accent)] text-[var(--accent-fg)] px-4 py-2 rounded-lg hover:bg-[var(--accent-strong)] hover:scale-105 transition-all shadow-[0_0_10px_var(--accent-line)]"
+                          >
+                            Commit to Change
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    )
                   )}
               </div>
             </div>

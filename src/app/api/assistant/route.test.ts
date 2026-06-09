@@ -7,14 +7,22 @@ import { resetRateLimits } from "@/lib/ai/rate-limit";
  */
 
 // Mock the AI client module before importing the route.
-vi.mock("@/lib/ai/client", () => ({
-  AINotConfiguredError: class extends Error {},
-  // Yield two chunks to simulate a streamed completion.
-  streamChat: async function* () {
-    yield "Hello ";
-    yield "world";
-  },
-}));
+vi.mock("@/lib/ai/client", () => {
+  class MockAINotConfiguredError extends Error {
+    constructor() {
+      super("AI assistant is not configured");
+      this.name = "AINotConfiguredError";
+    }
+  }
+  return {
+    AINotConfiguredError: MockAINotConfiguredError,
+    // Yield two chunks to simulate a streamed completion.
+    streamChat: vi.fn(async function* () {
+      yield "Hello ";
+      yield "world";
+    }),
+  };
+});
 
 const enabledState = { value: true };
 vi.mock("@/lib/ai/config", () => ({
@@ -147,7 +155,7 @@ describe("POST /api/assistant", () => {
   it("still answers when control characters are stripped from the message", async () => {
     const res = await POST(
       makeRequest({
-        messages: [{ role: "user", content: "How am I doing?" }],
+        messages: [{ role: "user", content: "How  am I doing?" }],
         activities: [],
       }),
     );
@@ -165,5 +173,35 @@ describe("POST /api/assistant", () => {
       }),
     );
     expect(res.status).toBe(400);
+  });
+
+  it("handles AINotConfiguredError during streaming gracefully", async () => {
+    const { streamChat, AINotConfiguredError } = await import("@/lib/ai/client");
+    vi.mocked(streamChat).mockImplementationOnce(async function* () {
+      throw new AINotConfiguredError();
+    });
+    const res = await POST(makeRequest(validBody));
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("[AI assistant is not configured.]");
+  });
+
+  it("handles general errors during streaming gracefully", async () => {
+    const { streamChat } = await import("@/lib/ai/client");
+    vi.mocked(streamChat).mockImplementationOnce(async function* () {
+      throw new Error("Something went wrong");
+    });
+    const res = await POST(makeRequest(validBody));
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("[The assistant is temporarily unavailable. Please try again.]");
+  });
+
+  it("uses anonymous fallback when x-forwarded-for header is missing", async () => {
+    const req = new Request("http://localhost/api/assistant", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(validBody),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(200);
   });
 });

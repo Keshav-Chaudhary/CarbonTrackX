@@ -24,6 +24,28 @@ describe("helpers", () => {
     expect(a).not.toBe(b);
     expect(a.length).toBeGreaterThan(0);
   });
+
+  it("generates unique ids using fallback when crypto is unavailable", () => {
+    const originalCrypto = globalThis.crypto;
+    // Temporarily delete/override crypto
+    Object.defineProperty(globalThis, "crypto", {
+      value: undefined,
+      writable: true,
+      configurable: true,
+    });
+    
+    const a = makeId();
+    const b = makeId();
+    expect(a).not.toBe(b);
+    expect(a.startsWith("id-")).toBe(true);
+
+    // Restore original crypto
+    Object.defineProperty(globalThis, "crypto", {
+      value: originalCrypto,
+      writable: true,
+      configurable: true,
+    });
+  });
 });
 
 describe("activityInputSchema", () => {
@@ -91,6 +113,67 @@ describe("useCarbonStore", () => {
     expect(useCarbonStore.getState().activities).toHaveLength(0);
   });
 
+  it("updates an existing activity", () => {
+    const { addActivity, updateActivity } = useCarbonStore.getState();
+    const added = addActivity({ factorId: "train", quantity: 5, date: "2026-01-02" });
+    expect(added.ok).toBe(true);
+    
+    if (added.ok) {
+      const updated = updateActivity(added.activity.id, {
+        factorId: "train",
+        quantity: 15,
+        date: "2026-01-02",
+        note: "Updated note",
+      });
+      expect(updated.ok).toBe(true);
+      expect(useCarbonStore.getState().activities[0].quantity).toBe(15);
+      expect(useCarbonStore.getState().activities[0].note).toBe("Updated note");
+    }
+  });
+
+  it("rejects an invalid update and does not change state", () => {
+    const { addActivity, updateActivity } = useCarbonStore.getState();
+    const added = addActivity({ factorId: "train", quantity: 5, date: "2026-01-02" });
+    expect(added.ok).toBe(true);
+    
+    if (added.ok) {
+      const updated = updateActivity(added.activity.id, {
+        factorId: "nope",
+        quantity: 5,
+        date: "2026-01-02",
+      });
+      expect(updated.ok).toBe(false);
+      expect(useCarbonStore.getState().activities[0].quantity).toBe(5); // unchanged
+    }
+  });
+
+  it("updates an existing activity in a list with multiple activities", () => {
+    const { addActivity, updateActivity } = useCarbonStore.getState();
+    const other = addActivity({ factorId: "car_petrol", quantity: 10, date: "2026-01-01" });
+    const added = addActivity({ factorId: "train", quantity: 5, date: "2026-01-02" });
+    expect(other.ok).toBe(true);
+    expect(added.ok).toBe(true);
+    
+    if (added.ok && other.ok) {
+      const updated = updateActivity(added.activity.id, {
+        factorId: "train",
+        quantity: 15,
+        date: "2026-01-02",
+        note: "Updated note",
+      });
+      expect(updated.ok).toBe(true);
+      
+      const state = useCarbonStore.getState();
+      expect(state.activities).toHaveLength(2);
+      // Verify the updated activity
+      const updatedItem = state.activities.find(a => a.id === added.activity.id);
+      expect(updatedItem?.quantity).toBe(15);
+      // Verify the untouched activity
+      const untouchedItem = state.activities.find(a => a.id === other.activity.id);
+      expect(untouchedItem?.quantity).toBe(10);
+    }
+  });
+
   it("removes an activity by id", () => {
     const { addActivity } = useCarbonStore.getState();
     const added = addActivity({ factorId: "train", quantity: 5, date: "2026-01-02" });
@@ -106,6 +189,10 @@ describe("useCarbonStore", () => {
     setGoal(-3);
     expect(useCarbonStore.getState().goal?.dailyTargetKg).toBe(0);
     setGoal(null);
+    expect(useCarbonStore.getState().goal).toBeNull();
+    setGoal(Infinity);
+    expect(useCarbonStore.getState().goal).toBeNull();
+    setGoal(NaN);
     expect(useCarbonStore.getState().goal).toBeNull();
   });
 

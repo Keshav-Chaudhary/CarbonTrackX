@@ -14,6 +14,23 @@ describe("buildCSP", () => {
     expect(csp).not.toContain("script-src 'self' 'unsafe-inline'");
   });
 
+  it("includes unsafe-eval in script-src when NODE_ENV is development", () => {
+    const prev = process.env.NODE_ENV;
+    (process as { env: Record<string, string | undefined> }).env.NODE_ENV = "development";
+    const csp = buildCSP();
+    expect(csp).toContain("'unsafe-eval'");
+    (process as { env: Record<string, string | undefined> }).env.NODE_ENV = prev;
+  });
+
+  it("includes unsafe-eval in script-src when NODE_ENV is development and a nonce is given", () => {
+    const prev = process.env.NODE_ENV;
+    (process as { env: Record<string, string | undefined> }).env.NODE_ENV = "development";
+    const csp = buildCSP("abc123");
+    expect(csp).toContain("'nonce-abc123'");
+    expect(csp).toContain("'unsafe-eval'");
+    (process as { env: Record<string, string | undefined> }).env.NODE_ENV = prev;
+  });
+
   it("restricts default-src to self", () => {
     expect(buildCSP()).toContain("default-src 'self'");
   });

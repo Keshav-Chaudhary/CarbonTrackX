@@ -32,7 +32,7 @@ export function buildCSP(nonce?: string): string {
     "img-src 'self' data: blob:",
     "font-src 'self' data:",
     // The AI provider is called server-side; the browser only talks to us.
-    "connect-src 'self' https://*.googleapis.com https://*.firebaseio.com",
+    "connect-src 'self' https://*.googleapis.com",
     "object-src 'none'",
     "frame-ancestors 'none'",
     "base-uri 'self'",

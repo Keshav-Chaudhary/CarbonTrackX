@@ -1,15 +1,10 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import {
   History,
   Trash2,
-  Database,
-  Download,
-  Upload,
-  Search,
-  Sparkles,
-  Lightbulb,
+  Leaf,
 } from "lucide-react";
 import { useCarbonStore } from "@/lib/store/carbon-store";
 import { useHydrated } from "@/components/useHydrated";
@@ -19,71 +14,20 @@ import { ActivityList } from "@/components/app/ActivityList";
 import { GoalSetter } from "@/components/app/GoalSetter";
 import {
   Button,
-
   Dialog,
-  Select,
   useToast,
-  formatKg,
 } from "@/components/ui";
 import { PageSkeleton } from "@/components/app/Skeletons";
 import { todayISO } from "@/lib/store/helpers";
 import { computeActivities } from "@/lib/emissions/calculate";
 import { CATEGORY_META } from "@/lib/emissions/factors";
 
-import {
-  Car,
-  Zap,
-  Utensils,
-  Leaf,
-  Trash,
-  Bike
-} from "lucide-react";
-
-const PRESETS = [
-  { label: "Car Commute", factorId: "car_petrol", quantity: 20, icon: Car, desc: "20 km (Petrol)" },
-  { label: "Electricity Day", factorId: "electricity", quantity: 10, icon: Zap, desc: "10 kWh" },
-  { label: "Beef Meal", factorId: "meal_beef", quantity: 1, icon: Utensils, desc: "1 serving" },
-  { label: "Vegan Meal", factorId: "meal_vegan", quantity: 1, icon: Leaf, desc: "1 serving" },
-  { label: "General Waste", factorId: "waste_general", quantity: 5, icon: Trash, desc: "5 kg" },
-  { label: "Zero-Emission Commute", factorId: "bike_walk", quantity: 10, icon: Bike, desc: "10 km" },
-];
-
-const ECO_TIPS = [
-  "Small changes make a huge difference. Replacing just one beef meal a week with a plant-based option can save roughly 100 kg of CO2e per year—the equivalent of driving a petrol car for 400 kilometers!",
-  "Unplugging inactive electronics, often called 'vampire power', can reduce your home energy footprint by up to 10%.",
-  "Opting for public transit or carpooling just twice a week can significantly reduce your daily commuting emissions over a year.",
-  "Washing clothes in cold water saves up to 90% of the energy used by your washing machine and keeps clothes looking new.",
-  "Reducing food waste is one of the most effective ways to lower your personal footprint—the average household wastes 30% of its food.",
-  "A leaky faucet that drips at the rate of one drop per second can waste more than 3,000 gallons per year, increasing water heating emissions.",
-  "Switching to LED lightbulbs uses at least 75% less energy and lasts 25 times longer than incandescent lighting.",
-  "Taking a 5-minute shower instead of a bath can save up to 50 gallons of water and drastically lower heating emissions.",
-  "Bringing your own reusable bags to the grocery store reduces the demand for single-use plastics, which are highly emission-intensive to produce.",
-  "Lowering your thermostat by just 2 degrees in the winter can cut your heating emissions by up to 10% without sacrificing comfort."
-];
-
-const CATEGORY_OPTIONS = [
-  { value: "all", label: "All Categories" },
-  { value: "transport", label: "Transport" },
-  { value: "energy", label: "Home Energy" },
-  { value: "diet", label: "Diet" },
-  { value: "shopping", label: "Shopping" },
-  { value: "waste", label: "Waste" },
-  { value: "custom", label: "Custom" },
-];
-
-const DATE_OPTIONS = [
-  { value: "all", label: "All Time" },
-  { value: "today", label: "Today" },
-  { value: "7days", label: "Last 7 Days" },
-  { value: "30days", label: "Last 30 Days" },
-];
-
-const IMPACT_OPTIONS = [
-  { value: "all", label: "All Impacts" },
-  { value: "low", label: "Low (< 1kg)" },
-  { value: "medium", label: "Medium (1 - 10kg)" },
-  { value: "high", label: "High (> 10kg)" },
-];
+import { PRESETS } from "./log-constants";
+import { QuickPresets } from "./QuickPresets";
+import { StatisticsHUD } from "./StatisticsHUD";
+import { DataPortability } from "./DataPortability";
+import { EcoTipCard } from "./EcoTipCard";
+import { FilterDeck } from "./FilterDeck";
 
 export function LogClient() {
   const hydrated = useHydrated();
@@ -106,21 +50,6 @@ export function LogClient() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [dateFilter, setDateFilter] = useState("all");
   const [impactFilter, setImpactFilter] = useState("all");
-
-  // Eco tip animation state
-  const [currentTipIndex, setCurrentTipIndex] = useState(0);
-  const [fadeTip, setFadeTip] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFadeTip(true);
-      setTimeout(() => {
-        setCurrentTipIndex((prev) => (prev + 1) % ECO_TIPS.length);
-        setFadeTip(false);
-      }, 500); // Wait for fade out
-    }, 8000); // Change every 8s
-    return () => clearInterval(interval);
-  }, []);
 
   // Selection states
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -356,34 +285,7 @@ export function LogClient() {
           </div>
 
           {/* Quick Presets */}
-          <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
-            <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--accent-subtle)] blur-[40px] opacity-0 transition-all group-hover:scale-150 group-hover:opacity-100" />
-            <div className="relative z-10">
-              <div className="mb-6 flex items-center gap-3 border-b border-[var(--border-faint)] pb-4">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface-3 border border-[var(--border-strong)] transition-colors group-hover:border-[var(--accent)]">
-                  <Sparkles className="size-5 text-[var(--accent)] group-hover:scale-110 transition-transform" />
-                </span>
-                <div>
-                  <h2 className="text-xl font-bold text-fg">Quick Log Presets</h2>
-                  <p className="text-sm text-fg-muted">One-click templates to instantly log routine actions.</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                {PRESETS.map((preset) => (
-                  <button
-                    key={preset.label}
-                    type="button"
-                    onClick={() => setPendingPreset(preset)}
-                    className="flex flex-col items-start text-left p-4 rounded-xl border border-[var(--border-strong)] bg-surface-3 hover:border-[var(--accent-line)] hover:bg-[var(--accent-subtle)] transition-all cursor-pointer group/btn"
-                  >
-                    <preset.icon className="size-5 mb-2 text-[var(--accent)] group-hover/btn:scale-110 transition-transform" />
-                    <span className="block text-sm font-semibold text-fg">{preset.label}</span>
-                    <span className="block text-xs text-fg-subtle">{preset.desc}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+          <QuickPresets onSelectPreset={(preset) => setPendingPreset(preset)} />
         </div>
 
         {/* Right Column: Ledger Log & Configuration */}
@@ -409,104 +311,57 @@ export function LogClient() {
                   </Button>
                 )}
               </div>
-            {/* Filter Deck */}
-            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 p-4 bg-surface-3 border-b border-[var(--border-faint)]">
-              {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 size-4 text-fg-subtle" />
-                <input
-                  type="text"
-                  placeholder="Search ledger..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 rounded-lg border border-[var(--border-strong)] bg-surface-1 text-sm text-fg placeholder:text-fg-subtle focus:!outline-none focus-visible:!outline-none focus:ring-1 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-all"
-                />
-              </div>
 
-              {/* Category Filter */}
-              <div className="z-40">
-                <Select
-                  ariaLabel="Filter by Category"
-                  value={selectedCategory}
-                  onChange={(val) => setSelectedCategory(val)}
-                  options={CATEGORY_OPTIONS}
-                  className="w-full"
-                />
-              </div>
-
-              {/* Date Filter */}
-              <div className="z-30">
-                <Select
-                  ariaLabel="Filter by Date"
-                  value={dateFilter}
-                  onChange={(val) => setDateFilter(val)}
-                  options={DATE_OPTIONS}
-                  className="w-full"
-                />
-              </div>
-
-              {/* Impact Filter */}
-              <div className="z-20">
-                <Select
-                  ariaLabel="Filter by Impact"
-                  value={impactFilter}
-                  onChange={(val) => setImpactFilter(val)}
-                  options={IMPACT_OPTIONS}
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-            {/* Statistics HUD */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-4 bg-surface-2 border-b border-[var(--border-faint)] text-xs text-fg-subtle">
-              <div className="p-3 rounded-lg bg-surface-3 border border-[var(--border-faint)]">
-                <span className="block text-fg-muted font-medium uppercase tracking-wider text-[10px]">Filtered Count</span>
-                <span className="block text-lg font-semibold text-fg mt-0.5 tnum">{filteredActivities.length}</span>
-              </div>
-              <div className="p-3 rounded-lg bg-surface-3 border border-[var(--border-faint)]">
-                <span className="block text-fg-muted font-medium uppercase tracking-wider text-[10px]">Emissions Sum</span>
-                <span className="block text-lg font-semibold text-[var(--accent)] mt-0.5 tnum">{formatKg(stats.totalEmissions)}</span>
-              </div>
-              <div className="p-3 rounded-lg bg-surface-3 border border-[var(--border-faint)]">
-                <span className="block text-fg-muted font-medium uppercase tracking-wider text-[10px]">Peak Activity</span>
-                <span className="block text-lg font-semibold text-fg mt-0.5 tnum">{formatKg(stats.maxImpact)}</span>
-              </div>
-              <div className="p-3 rounded-lg bg-surface-3 border border-[var(--border-faint)]">
-                <span className="block text-fg-muted font-medium uppercase tracking-wider text-[10px]">Average Impact</span>
-                <span className="block text-lg font-semibold text-fg mt-0.5 tnum">{formatKg(stats.avgImpact)}</span>
-              </div>
-            </div>
-
-            {/* Bulk Selection Actions */}
-            {filteredActivities.length > 0 && (
-              <div className="flex items-center justify-between gap-4 p-3 bg-surface-3 border-b border-[var(--border-faint)] text-sm">
-                <label className="flex items-center gap-2 cursor-pointer select-none text-fg-subtle">
-                  <input
-                    type="checkbox"
-                    checked={filteredActivities.length > 0 && filteredActivities.every((act) => selectedIds.has(act.id))}
-                    onChange={handleSelectAllFiltered}
-                    className="size-4 rounded border-[var(--border-strong)] bg-surface-1 text-[var(--accent)] focus:ring-[var(--accent)] cursor-pointer accent-[var(--accent)]"
-                  />
-                  Select all visible
-                </label>
-                {selectedIds.size > 0 && (
-                  <Button variant="danger" size="sm" onClick={() => setConfirmBulkDelete(true)}>
-                    <Trash2 className="size-4 mr-1.5" />
-                    Purge Selected ({selectedIds.size})
-                  </Button>
-                )}
-              </div>
-            )}
-
-            <div className="pt-4 flex-1 max-h-[300px] overflow-y-auto custom-scrollbar">
-              <ActivityList
-                customActivities={filteredActivities}
-                selectedIds={selectedIds}
-                onToggleSelect={handleToggleSelect}
+              {/* Filter Deck */}
+              <FilterDeck
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                dateFilter={dateFilter}
+                setDateFilter={setDateFilter}
+                impactFilter={impactFilter}
+                setImpactFilter={setImpactFilter}
               />
+
+              {/* Statistics HUD */}
+              <StatisticsHUD
+                filteredCount={filteredActivities.length}
+                totalEmissions={stats.totalEmissions}
+                maxImpact={stats.maxImpact}
+                avgImpact={stats.avgImpact}
+              />
+
+              {/* Bulk Selection Actions */}
+              {filteredActivities.length > 0 && (
+                <div className="flex items-center justify-between gap-4 p-3 bg-surface-3 border-b border-[var(--border-faint)] text-sm">
+                  <label className="flex items-center gap-2 cursor-pointer select-none text-fg-subtle">
+                    <input
+                      type="checkbox"
+                      checked={filteredActivities.length > 0 && filteredActivities.every((act) => selectedIds.has(act.id))}
+                      onChange={handleSelectAllFiltered}
+                      className="size-4 rounded border-[var(--border-strong)] bg-surface-1 text-[var(--accent)] focus:ring-[var(--accent)] cursor-pointer accent-[var(--accent)]"
+                    />
+                    Select all visible
+                  </label>
+                  {selectedIds.size > 0 && (
+                    <Button variant="danger" size="sm" onClick={() => setConfirmBulkDelete(true)}>
+                      <Trash2 className="size-4 mr-1.5" />
+                      Purge Selected ({selectedIds.size})
+                    </Button>
+                  )}
+                </div>
+              )}
+
+              <div className="pt-4 flex-1 max-h-[300px] overflow-y-auto custom-scrollbar">
+                <ActivityList
+                  customActivities={filteredActivities}
+                  selectedIds={selectedIds}
+                  onToggleSelect={handleToggleSelect}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
           {/* Settings Sub-grid to utilize right-side space and balance columns */}
           <div className="grid gap-6 md:grid-cols-2">
@@ -514,65 +369,11 @@ export function LogClient() {
             <GoalSetter />
 
             {/* Data Portability */}
-            <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col h-fit">
-              <div className="absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-[var(--accent-subtle)] blur-[40px] opacity-0 transition-all group-hover:scale-150 group-hover:opacity-100" />
-              <div className="relative z-10">
-                <div className="mb-6 flex items-center gap-3 border-b border-[var(--border-faint)] pb-4">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface-3 border border-[var(--border-strong)] transition-colors group-hover:border-[var(--accent)]">
-                    <Database aria-hidden="true" className="size-5 text-[var(--accent)] group-hover:scale-110 transition-transform" />
-                  </span>
-                  <div>
-                    <h2 className="text-xl font-bold text-fg">Data Portability</h2>
-                    <p className="text-sm text-fg-muted">Backup your ledger or upload an existing backup.</p>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-3">
-                  <Button variant="outline" className="w-full justify-center whitespace-nowrap rounded-xl h-10 border-[var(--border-strong)] hover:border-[var(--accent)] hover:text-[var(--accent)]" onClick={handleExport}>
-                    <Download className="size-4 mr-2" />
-                    Export JSON
-                  </Button>
-                  <label className="group relative overflow-hidden rounded-xl border border-[var(--border-faint)] bg-surface-2 p-6 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col h-fit cursor-pointer">
-                    <span className="mb-2 flex items-center gap-2 font-semibold text-fg">
-                      <Upload className="size-4 text-[var(--accent)]" />
-                      Import Data
-                    </span>
-                    <span className="text-sm text-fg-muted">
-                      Restore activities from a JSON file.
-                    </span>
-                    <span className="mt-4 inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-xl border border-[var(--border-strong)] bg-transparent px-4 text-sm font-semibold text-fg transition-all hover:border-[var(--fg-subtle)] hover:bg-surface-2">
-                      Choose File
-                    </span>
-                    <input
-                      type="file"
-                      accept=".json"
-                      onChange={handleFileChange}
-                      className="sr-only"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
+            <DataPortability onExport={handleExport} onFileChange={handleFileChange} />
           </div>
 
           {/* Eco Tip Card */}
-          <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
-            <div className="absolute right-0 top-0 h-32 w-32 -translate-y-1/2 translate-x-1/2 rounded-full bg-[var(--accent-subtle)] blur-[40px] pointer-events-none transition-all group-hover:scale-150" />
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="mb-4 flex items-center gap-2">
-                <Lightbulb className="size-5 text-[var(--accent)] animate-pulse" />
-                <h2 className="text-lg font-bold text-fg">Did you know?</h2>
-              </div>
-              <div className="h-[120px] relative mt-2">
-                <p 
-                  className={`absolute inset-x-0 top-0 text-sm text-fg-muted italic leading-relaxed transition-all duration-500 ease-in-out ${
-                    fadeTip ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
-                  }`}
-                >
-                  &quot;{ECO_TIPS[currentTipIndex]}&quot;
-                </p>
-              </div>
-            </div>
-          </div>
+          <EcoTipCard />
         </div>
       </div>
 

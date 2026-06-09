@@ -26,6 +26,20 @@ describe("buildFootprintContext", () => {
     expect(ctx).toMatch(/Biggest source/);
     expect(ctx).toMatch(/Diet/); // beef-heavy → diet dominates
   });
+
+  it("handles empty insights list", () => {
+    const mockAnalysis = {
+      totalKg: 0,
+      byCategory: { diet: 0, transport: 0, energy: 0, shopping: 0, waste: 0, custom: 0 },
+      activityCount: 0,
+      topCategory: null,
+      dailyAverageKg: 0,
+      comparison: { vsGlobalPct: 0, vsTarget: "under" as const },
+      insights: [],
+    };
+    const ctx = buildFootprintContext(mockAnalysis);
+    expect(ctx).not.toContain("Suggested opportunities already computed");
+  });
 });
 
 describe("buildMessages", () => {

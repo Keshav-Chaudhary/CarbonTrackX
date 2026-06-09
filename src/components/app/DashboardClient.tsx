@@ -194,7 +194,7 @@ export function DashboardClient() {
           </div>
           {headlineInsights.length > 0 ? (
             <div className="flex-1">
-              <InsightList insights={headlineInsights} dailyAverageKg={analysis.dailyAverageKg} />
+              <InsightList insights={headlineInsights} dailyAverageKg={analysis.dailyAverageKg} compact />
             </div>
           ) : (
             <div className="flex-1 flex items-center justify-center p-6 text-center text-sm text-fg-muted rounded-3xl border border-[var(--border-faint)] bg-surface-2">

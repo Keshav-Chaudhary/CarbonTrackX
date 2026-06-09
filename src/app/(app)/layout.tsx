@@ -1,7 +1,6 @@
 import { Sidebar } from "@/components/nav/Sidebar";
 import { MobileNav } from "@/components/nav/MobileNav";
 import { MobileHeader } from "@/components/nav/MobileHeader";
-import { SyncController } from "@/components/app/SyncController";
 
 /**
  * Application shell shared by every /app route.
@@ -17,7 +16,6 @@ export default function AppLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
-      <SyncController />
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 md:block">
         <Sidebar />
