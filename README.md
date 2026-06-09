@@ -1,63 +1,78 @@
 # CarbonTrackX — Intelligent Carbon Footprint Tracker & Analytics Engine
 
-CarbonTrackX is a high-performance, ultra-premium web application designed to track, analyze, and lower individual carbon footprints. Powered by a deterministic mathematical calculation core and complemented by a grounded AI narrative assistant, CarbonTrackX enables users to catalog their daily footprint and embark on a quantifiable carbon reduction journey. 
+CarbonTrackX is a high-performance, ultra-premium web application designed to track, analyze, and lower individual carbon footprints. Powered by a deterministic mathematical calculation core and complemented by a grounded AI Intelligence Center, CarbonTrackX enables users to catalog their daily footprint and embark on a quantifiable carbon reduction journey.
 
-The application has been styled from the ground up using a modern, dark-first "Bento Box" glassmorphism theme that features smooth animations, rich transitions, and responsive grid layouts designed to engage and inform.
+The application is styled from the ground up using a modern, dark-first **"Bento Box" glassmorphism** theme with a consistent design language across every page — featuring smooth staggered entrance animations (`rise` + `fade-in`), hover glow effects, rounded bento cards, and a fully premium responsive layout.
 
 ---
 
 ## Table of Contents
 
-- [Target Vertical & Core Philosophy](#target-vertical--core-philosophy)
 - [Key Features](#key-features)
 - [System Architecture & Flow](#system-architecture--flow)
 - [Tech Stack & Technical Rationale](#tech-stack--technical-rationale)
 - [Project Directory Structure](#project-directory-structure)
 - [Local Development Setup](#local-development-setup)
+- [AI Assistant & Inference Configuration](#ai-assistant--inference-configuration)
+- [Google Cloud Deployment](#google-cloud-deployment)
 - [Testing Suite](#testing-suite)
 - [Accessibility (a11y) Implementation](#accessibility-a11y-implementation)
 - [Security Hardening](#security-hardening)
-- [AI Assistant & Inference Configuration](#ai-assistant--inference-configuration)
-
----
-
-## Target Vertical & Core Philosophy
-
-CarbonTrackX focuses specifically on the **Everyday Individual**. Rather than modeling high-level corporate statistics, CarbonTrackX targets the individual's direct footprint across four primary domains of modern life: **Transport**, **Home Energy**, **Diet**, and **Shopping**.
-
-### The Intelligence is Deterministic; The AI is a Narrator
-To prevent hallucinations and guarantee absolute mathematical consistency:
-- **Zero AI in Math:** All emission factors, carbon totals, and potential savings calculations are computed deterministically using standard formulas and officially cited emission factors.
-- **Context-Bound AI:** The natural language assistant does not formulate opinions or guess stats. It is injected with a structured facts block representing your actual logs, acting purely as an analytical narrator of your numbers.
 
 ---
 
 ## Key Features
 
-### 1. Bento-Box Dashboard HUD
-- **Dynamic Burn Rate:** Displays daily average emission rates alongside sustainable global targets.
-- **Sector Allocation:** Features SVG charts mapping carbon footprints to their contributing categories.
-- **Micro-Animations:** Fluid, staggered page entrances and hover states bring the data visualization to life.
+### 1. Bento-Box Dashboard
+- **Engine Vitals HUD:** Compact stats strip showing total logged CO₂e, daily average, and daily target at a glance.
+- **Emission Trajectory Chart:** Full-width trend chart tracking daily emissions over the past week.
+- **Sector Allocation:** SVG-powered breakdown chart mapping footprints to their contributing categories.
+- **Dynamic Goal Progress:** Custom linear bar showing daily target consumption with live percentage.
+- **Carbon Score:** A 0–100 score benchmarked against global averages, with severity labels.
+- **Actionable Advice Panel:** Top 3 AI-generated insights surfaced directly on the dashboard.
+- **Staggered Animations:** Every card enters the viewport with a coordinated `rise` animation (opacity + translateY + blur-out) on page load.
 
 ### 2. Live Telemetry Logger
-- **Manual Logging:** Fast inputs for natural units (e.g., flight hours, kilometers driven, meals eaten, kilowatt-hours).
-- **Preset Quick-Logs:** One-click presets for common activities (e.g., typical commute, large file transfers, beef meal).
-- **Advanced Filtering & Search:** A complete HUD interface to search, filter by category, impact level, and date ranges.
-- **Telemetry Management:** Full JSON Import/Export backing up telemetry data directly to/from your system, and bulk deletion support.
+- **Manual Logging:** Fast inputs for natural units (km driven, kWh used, meals, flight hours).
+- **Preset Quick-Logs:** One-click presets for common activities (commute, beef meal, etc.).
+- **Advanced Filtering & Search:** Filter by category, impact level, and date range in a full HUD interface.
+- **Telemetry Management:** Full JSON import/export, inline editing, and bulk deletion support.
 
-### 3. "Commit to Change" Engine
-- **Quantified Swaps:** Instead of generic tips, CarbonTrackX computes exact daily savings (e.g., *"Carpooling will save ~2.4 kg CO₂e per day"*).
-- **Dynamic Target Adjustment:** Users can commit to specific insights. The engine binds this selection to the global store, recalculating and permanently lowering the user's daily carbon limit.
+### 3. AI Intelligence Center
+- **Hero Search Layout:** When the conversation is empty, a massive centered composer sits over an ambient glow — transforming into a standard chat layout the moment the first message is sent.
+- **Interactive Control Header:** Displays the **Intelligence Center** branding with a live-pulsing status indicator (System Online / Offline) wired directly to the AI connection state.
+- **Streaming Responses:** Replies stream token-by-token using Server-Sent Events for a responsive feel.
+- **Smart Suggestion Chips:** Pre-built contextual prompt chips (Analyze emissions, Suggest reductions, etc.) rendered below the hero composer.
+- **Activity Logging via Chat:** The AI can log activities directly from conversation using `[LOG_ACTIVITY:{...}]` markers, silently intercepted and hidden from the UI.
+- **Clear Context Warning:** Clicking "Clear Context" triggers a confirmation dialog before wiping the conversation, preventing accidental resets.
+- **Local Model Support:** Configurable to run against local Ollama inference (e.g., `llama3.2:1b`) for fully offline, private operation.
 
-### 4. Interactive AI Chat
-- **Fact-Grounded Conversation:** Ask the assistant about your worst categories, average emissions, or ways to cut down.
-- **Streaming Responses:** Streams responses segment-by-segment using Server-Sent Events (SSE) for a responsive interface.
+### 4. Settings Page
+- **Appearance:** Premium animated pill toggle (Moon ↔ Sun) for switching Dark / Light mode.
+- **Daily Emission Target:** Set a personal daily CO₂e budget, view the IPCC sustainable average, and remove the goal with one click.
+- **Data Management:** Live stats strip (activity count, total CO₂e, storage KB), one-click JSON export, and a "Clear All Data" action with a confirmation dialog.
+- **Privacy Panel:** Status pills confirming Local-Only data storage, LLM-only AI inference, and zero analytics tracking.
+- **About Panel:** Version number, emission factor source (IPCC AR6), and framework stack info.
+
+### 5. "Commit to Change" Insights Engine
+- **Quantified Swaps:** Computes exact daily savings (e.g., *"Carpooling saves ~2.4 kg CO₂e/day"*).
+- **Dynamic Target Adjustment:** Committing to an insight permanently lowers the user's daily carbon limit in the global store.
+
+### 6. Premium Navigation
+- **Grouped Sidebar:** Desktop sidebar with nav items grouped by `OVERVIEW`, `INTELLIGENCE`, and `SYSTEM` labels, with gradient active states.
+- **Animated Pill Theme Toggle:** The sidebar header features a sliding pill toggle with a spring-eased animation and green glow on the active slot.
+- **Updated External Links:** "The Engine" uses a `Zap` icon and "About" uses a `BookOpen` icon, with a `SquareArrowOutUpRight` framed external link indicator.
+- **Floating Glassmorphism Header:** The marketing site has a pill-shaped, backdrop-blurred floating navigation bar.
+
+### 7. Marketing Landing Page
+- **Full-Bleed Hero:** Large headline with staggered copy entrance, CTA buttons, and a live mock dashboard preview.
+- **Bento Feature Grid:** 2×3 responsive feature grid matching the app's exact card styling.
+- **Stats Pulse Bar:** Animated scroll-reveal stats strip.
+- **Consistent Branding:** All typography, font weights, and button styles exactly match the app's theme (`font-black`, `bg-[var(--accent)]`, glow shadows).
 
 ---
 
 ## System Architecture & Flow
-
-The following diagram illustrates how user actions propagate through the Zustand store, the deterministic engines, and the secure server-side LLM inference pipeline:
 
 ```text
 ┌────────────────────────────────────────────────────────┐
@@ -69,15 +84,15 @@ The following diagram illustrates how user actions propagate through the Zustand
 │   └─────────┬─────────┘        └─────────▲─────────┘   │
 │             │                            │             │
 │             ▼                            │             │
-│   ┌──────────────────────────────────────┴─────────┐   │
-│   │        Zustand Client Store (Zustand/Persist)  │   │
-│   │             • Persisted in localStorage        │   │
+│   ┌─────────────────────────────────────┴──────────┐   │
+│   │      Zustand Client Store (Zustand/Persist)    │   │
+│   │           • Persisted in localStorage          │   │
 │   └─────────────────┬────────────────────▲─────────┘   │
 │                     │                    │             │
 │                     ▼                    │             │
-│   ┌──────────────────────────────────────┴─────────┐   │
+│   ┌─────────────────────────────────────┴──────────┐   │
 │   │        Pure Calculation Engines                │   │
-│   │        • Emissions Engine (Citations)          │   │
+│   │        • Emissions Engine (IPCC AR6 factors)   │   │
 │   │        • Insights Rules Engine                 │   │
 │   └─────────────────┬──────────────────────────────┘   │
 │                     │ Chat Request                     │
@@ -99,9 +114,10 @@ The following diagram illustrates how user actions propagate through the Zustand
 │                     │                                  │
 │                     ▼ SSE Stream                       │
 │   ┌────────────────────────────────────────────────┐   │
-│   │         DigitalOcean Gradient Endpoint         │   │
+│   │         AI Inference Endpoint                  │   │
+│   │  • Google Gemini (default, cloud)              │   │
+│   │  • Local Ollama (optional, fully private)      │   │
 │   │  • Secure API Key resolution (Server-Only)     │   │
-│   │  • Llama-3 LLM Inference Streaming             │   │
 │   └────────────────────────────────────────────────┘   │
 └────────────────────────────────────────────────────────┘
 ```
@@ -112,14 +128,16 @@ The following diagram illustrates how user actions propagate through the Zustand
 
 | Layer | Technology | Rationale |
 | :--- | :--- | :--- |
-| **Framework** | Next.js 16 (App Router) | Combines rapid client-side rendering with secure, server-side API routing. |
-| **Language** | TypeScript (Strict Mode) | Guarantees type-safety across custom state variables, Zod schemas, and APIs. |
-| **State** | Zustand + Middleware Persist | Lightweight, external state manager that automatically syncs telemetry logs to `localStorage`. |
-| **Validation** | Zod | Single schemas define data validations on both client-side components and server-side routes. |
-| **Styling** | Tailwind CSS v4 | Provides a token-driven utility core paired with a flexible inline theme engine. |
-| **AI Backend** | DigitalOcean Gradient | OpenAI-compatible endpoint hosting Llama models, optimized for secure SSE output streams. |
-| **Unit Testing** | Vitest + Testing Library | High-speed, JS-based test execution mimicking browser rendering without heavy setups. |
-| **E2E Testing** | Playwright + Axe-Core | Automates full-browser telemetry simulations while enforcing accessibility policies. |
+| **Framework** | Next.js 16 (App Router) | Server components + API routes + standalone Docker output. |
+| **Language** | TypeScript (Strict Mode) | Type-safety across state, Zod schemas, and API contracts. |
+| **State** | Zustand + Persist | Lightweight store that auto-syncs telemetry to `localStorage`. |
+| **Validation** | Zod | Single schema used on both client forms and server API routes. |
+| **Styling** | Tailwind CSS v4 | Token-driven utilities with a CSS-variable design system. |
+| **AI Backend** | Google Gemini / Ollama | OpenAI-compatible endpoint supporting cloud or fully local inference. |
+| **Containerisation** | Docker (multi-stage) | Minimal ~150 MB standalone image optimised for Cloud Run. |
+| **CI/CD** | Google Cloud Build | Auto-build + push + deploy on every `git push` to `main`. |
+| **Unit Testing** | Vitest + Testing Library | High-speed JS test execution with browser-like rendering. |
+| **E2E Testing** | Playwright + Axe-Core | Full-browser flows + automated WCAG accessibility scanning. |
 
 ---
 
@@ -127,27 +145,32 @@ The following diagram illustrates how user actions propagate through the Zustand
 
 ```text
 ├── .github/              # CI/CD Workflows (GitHub Actions)
+├── .env.example          # Environment variable template (safe to commit)
+├── Dockerfile            # Multi-stage production Docker image
+├── cloudbuild.yaml       # Google Cloud Build CI/CD pipeline
 ├── e2e/                  # Playwright E2E and accessibility test scripts
 ├── public/               # Static assets, fonts, icons
 ├── src/
-│   ├── app/              # Next.js App Router Page directories & global layout
-│   │   ├── (marketing)/  # Marketing landing page & engine details
-│   │   ├── api/          # Secure endpoints (/api/assistant)
-│   │   └── app/          # Core dashboard, logging, insights & goals panels
-│   ├── components/       # Shared reusable UI & layout pieces
-│   │   ├── app/          # Dashboard stats, list HUDs, and form items
+│   ├── app/              # Next.js App Router pages & layouts
+│   │   ├── (marketing)/  # Landing page, The Engine, About
+│   │   ├── api/          # Secure server endpoints (/api/assistant)
+│   │   └── (app)/app/    # Dashboard, Log, Insights, Goals, Assistant, Settings
+│   ├── components/
+│   │   ├── app/          # Page clients (Dashboard, Log, Insights, Goals, Assistant, Settings)
 │   │   ├── charts/       # Custom SVG charts and allocation graphs
-│   │   ├── ui/           # Design System primitives (Buttons, Badges, Modals)
-│   │   └── theme/        # Light/Dark Theme management context
-│   └── lib/              # Client/Server helper functions & computation logic
-│       ├── ai/           # LLM prompt builders and SSE parsing mechanics
-│       ├── emissions/    # Pure equations & cited emission coefficients
-│       ├── insights/     # Deterministic evaluation rules
-│       ├── security/     # Global security headers & sanitizers
-│       └── store/        # Zustand store definitions and state persistence
-├── playwright.config.ts  # Playwright browser automation options
-├── tsconfig.json         # Strict TypeScript compiler options
-└── vitest.config.ts      # Component and unit test configuration
+│   │   ├── marketing/    # MarketingHeader, MarketingFooter
+│   │   ├── nav/          # Sidebar, MobileNav, MobileHeader, Logo, nav-config
+│   │   ├── theme/        # ThemeProvider (Dark / Light context)
+│   │   └── ui/           # Design System primitives (Button, Dialog, Toast, ThemeToggle…)
+│   └── lib/
+│       ├── ai/           # LLM config, prompt builder, SSE parser
+│       ├── emissions/    # Pure equations & IPCC AR6 emission coefficients
+│       ├── insights/     # Deterministic insight rules engine
+│       ├── security/     # Security headers & XSS sanitizers
+│       └── store/        # Zustand store + helpers + persistence
+├── playwright.config.ts
+├── tsconfig.json
+└── vitest.config.ts
 ```
 
 ---
@@ -155,175 +178,159 @@ The following diagram illustrates how user actions propagate through the Zustand
 ## Local Development Setup
 
 ### Prerequisites
-- **Node.js:** Version 22.0.0 or higher.
-- **npm:** Version 10 or higher.
+- **Node.js** v22.0.0 or higher
+- **npm** v10 or higher
+- **Ollama** (optional, for local AI inference)
 
-### Installation & Run
+### Installation
 
-1. Clone the project and install local dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+# 1. Clone and install
+git clone https://github.com/Keshav-Chaudhary/CarbonTrackX.git
+cd CarbonTrackX
+npm install
 
-2. Spin up the development server:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your web browser.
+# 2. Set up environment
+cp .env.example .env.local
+# Edit .env.local with your API key (see AI section below)
+
+# 3. Start dev server
+npm run dev
+# → http://localhost:3000
+```
 
 ### Development Commands
 
 ```bash
-# Compile and output optimized build assets
-npm run build
-
-# Start the compiled production build locally
-npm run start
-
-# Audit code files for formatting and formatting violations
-npm run lint
-
-# Run type checks using the TS compiler without compiling files
-npm run typecheck
+npm run dev          # Start development server with hot reload
+npm run build        # Compile optimised production build
+npm run start        # Serve the production build locally
+npm run lint         # ESLint audit
+npm run typecheck    # TypeScript check (no emit)
+npm run test         # Vitest unit tests
+npm run test:e2e     # Playwright E2E + accessibility scans
 ```
-
----
-
-## Code Quality & Architecture
-
-To ensure high maintainability and prevent technical debt, the application architecture strictly enforces the following 15 code quality pillars:
-
-1. **Strict TypeScript:** Enforces robust type safety, eliminating entire classes of runtime errors.
-2. **ESLint Enforcement:** Strictest configuration rules for clean, standard code formatting and syntax checks.
-3. **Zod Schema Validation:** Single source of truth for types across client inputs and server endpoints.
-4. **Modular Components:** Highly isolated React UI primitives enabling infinite reusability.
-5. **Pure Functions:** Business logic isolated from side effects, allowing deterministic math calculations.
-6. **Separation of Concerns:** Clear demarcation between data models, UI layers, and external integrations.
-7. **Next.js App Router:** Modern file-system based routing enforcing structured API and page directories.
-8. **Semantic Naming:** Self-documenting variable and function names describing exact intentions.
-9. **No Magic Numbers:** Global constants are meticulously exported and reused from configuration files.
-10. **Clean Directory Tree:** Logical folder hierarchies grouping shared hooks, components, and libraries.
-11. **Immutability Practices:** Zustand state operates strictly through immutable state updates.
-12. **Commented Logic Flow:** JSDoc annotations explain complex function algorithms and input bounds.
-13. **Centralized Configuration:** Tailwind config and PostCSS settings abstracted into root configurations.
-14. **Custom Error Handling:** Graceful boundary fallbacks preventing unhandled promise rejections.
-15. **DRY Principle:** "Don't Repeat Yourself" enforced across shared Tailwind utility classes and calculations.
-
----
-
-## Efficiency & Performance
-
-The application is heavily optimized for zero-latency interactions and minimum bandwidth consumption:
-
-1. **Server-Side Rendering (SSR):** Next.js pre-renders HTML for an instantaneous First Contentful Paint (FCP).
-2. **Minimal Bundle Size:** Tailwind v4 automatically purges unused CSS, generating only necessary style bytes.
-3. **Optimized SVGs:** Iconography loaded via efficient Lucide-react components instead of heavy image requests.
-4. **Debounced API Calls:** Rapid search inputs and log submissions are debounced to prevent network flood.
-5. **Client-Side Navigation:** Instant routing between pages without full browser refreshes.
-6. **Streaming LLM Responses:** Server-Sent Events (SSE) provide sub-second time-to-first-token inference.
-7. **Local-First Speed:** Zustand + `localStorage` provides zero-latency state restoration and manipulation.
-8. **Image Optimization:** Next.js Image component ensures responsive, auto-compressed imagery delivery.
-9. **Memoization:** React `useMemo` and `useCallback` implementations prevent unnecessary component re-renders.
-10. **Lazy Loading:** Heavy external libraries and layout segments loaded conditionally.
-11. **Edge-Ready API:** `/api/assistant` configured for stateless, rapid serverless or edge deployments.
-12. **Font Optimization:** `next/font` removes layout shift (CLS) and external font loading latency.
-13. **CSS Hardware Acceleration:** Micro-animations utilize `transform` and `opacity` to offload rendering to the GPU.
-14. **Efficient DOM Updates:** React 19's concurrent features manage state batching securely.
-15. **Cache-Control Headers:** Static assets strongly cached at the CDN/Browser level.
-
----
-
-## Testing Suite
-
-CarbonTrackX is tested across three independent levels to verify correctness, visual style stability, and code security:
-
-```bash
-# Run Vitest unit & component test specifications
-npm run test
-
-# Run Vitest tests with test coverage statistics
-npm run test:coverage
-
-# Run Playwright E2E scenarios and automated Axe accessibility scans
-npm run test:e2e
-```
-
-1. **Unit Tests (Vitest):** Asserts pure calculations in the emissions engine for deterministic outcomes.
-2. **Deterministic Insight Checks:** Validates insight rules without requiring external API dependencies.
-3. **Prompt Construction Tests:** Ensures AI context blocks are assembled accurately from user telemetry.
-4. **SSE Stream Parsing Validation:** Checks chunk decoding logic for incomplete or broken stream responses.
-5. **Rate Limiter Logic Checks:** Tests fixed-window thresholds and memory bounds to prevent API abuse.
-6. **Component Tests (React Testing Library):** Validates modular UI elements (e.g., inputs, selectors, dials) in complete isolation.
-7. **End-to-End Simulation (Playwright):** Drives real browser flows for logging, committing, and managing telemetry data.
-8. **Automated Accessibility Scanning (Axe-Core):** Runs continuous structural design standard checks at each stage of the E2E UI flow.
-9. **Contrast Ratio Assertions:** Automatically verifies foreground and background combinations against strict WCAG AA 4.5:1 standards.
-10. **State Persistence Tests:** Ensures local Zustand storage correctly hydrates and persists data across page reloads.
-11. **Form Validation Checks (Zod):** Verifies that malformed inputs are rejected gracefully with helpful UI messages.
-12. **Network Resilience Testing:** Validates application behavior and fallback logic under API timeouts or missing environment keys.
-13. **Routing and Navigation Assertions:** Confirms Next.js App Router transitions and layout states function flawlessly.
-14. **Cross-Browser Compatibility:** Leverages Playwright to ensure the application acts identically across Chromium, WebKit, and Firefox rendering engines.
-15. **CI/CD Integration:** Automatically triggers unit and E2E suites on every pull request via GitHub Actions to block breaking changes.
-
----
-
-## Accessibility (a11y) Implementation
-
-CarbonTrackX was designed with a strict adherence to WCAG 2.1 AA requirements, scoring flawlessly on automated Axe-Core audits across 15 distinct accessibility vectors:
-
-1. **Strict Contrast Standards:** WCAG AA 4.5:1 ratio enforced across all background and foreground combinations.
-2. **Semantic Structure:** One `<h1>` per page with properly descending `<h2>` and `<h3>` tags.
-3. **ARIA Landmarks:** `<main>`, `<nav>`, and `<header>` roles explicitly defined for screen reader navigation.
-4. **Keyboard Skip-to-Content:** Hidden anchor allowing keyboard users to bypass heavy navigation bars.
-5. **Screen Reader Support:** Form controls are strictly bound using explicit `<label>` elements.
-6. **Descriptive Errors:** `aria-describedby` and `aria-errormessage` dynamically read failed input criteria.
-7. **Linear Focus Management:** Tab ordering flows naturally without confusing DOM jumps.
-8. **Focus Visible Indication:** `focus-visible` CSS utilities draw high-contrast rings around active elements.
-9. **Focus Trapping:** Modal dialogs constrain keyboard traversal to prevent background manipulation.
-10. **Reduced Motion Triggers:** Background flows and animations lock down under `prefers-reduced-motion: reduce`.
-11. **Custom ARIA Roles:** Complex dropdowns mimic standard `<select>` inputs via interactive `listbox` roles.
-12. **Image Alt Text:** All informative SVGs/images feature explicit descriptive alternatives.
-13. **Hidden Decorative Elements:** Non-essential background glows utilize `aria-hidden="true"`.
-14. **Touch Targets:** Interactive buttons sized to a minimum 44x44px for easy mobile tap interactions.
-15. **Color-Agnostic Cues:** System statuses use both color and semantic icons (e.g., Warning Triangle + Amber).
-
----
-
-## Security Hardening
-
-To safeguard user sessions and API keys, the codebase enforces multiple defense layers:
-
-- **Server-Side Key Protection:** The LLM API key (`DO_INFERENCE_API_KEY`) is strictly locked to backend environments using the `server-only` directive.
-- **Environment Variable Splitting:** Strict separation of `NEXT_PUBLIC_` client variables from sensitive server tokens to prevent bundle leakage.
-- **Strict Content Security Policy (CSP):** Limits the execution of unauthorized scripts and restricts fetching to trusted external resources.
-- **HTTP Strict Transport Security (HSTS):** Enforces secure, encrypted connections across all routes to prevent downgrade attacks.
-- **Cross-Origin Isolation:** Employs Cross-Origin-Embedder-Policy (COEP) and Cross-Origin-Opener-Policy (COOP) to mitigate side-channel vulnerabilities.
-- **Feature Permissions Policy:** Locks down unnecessary device APIs (like camera, geolocation, and microphone) by default.
-- **API Rate Limiting:** Protects the `/api/assistant` route using a robust sliding window algorithm to throttle brute force or volumetric abuse.
-- **Zod Input Validation:** Validates schema bounds strictly on both the client interface and server API endpoints.
-- **HTML/Script Sanitization:** Actively strips `<script>` tags and encoded payloads to prevent prompt-injection formats and Cross-Site Scripting (XSS).
-- **Payload Size Limits:** Drops overly large requests at the Next.js API boundary to protect against Denial of Service (DoS) and buffer overflows.
-- **Local-First Architecture:** Keeps private telemetry data constrained entirely to the user's `localStorage`, avoiding central database breaches.
-- **CORS Hardening:** Restricts cross-origin resource sharing to trusted origins only, blocking unauthorized external application requests.
-- **Dependency Scanning:** Utilizes automated `npm audit` pipelines to block the introduction of known vulnerable packages in the dependency tree.
-- **Zero-Trust Client Assumption:** Re-calculates state variables deterministically on the server route instead of trusting client-side math.
-- **No Analytics Tracking:** Protects user privacy by ensuring zero third-party telemetry, ad-pixels, or tracking cookies are loaded into the browser.
 
 ---
 
 ## AI Assistant & Inference Configuration
 
-The chat helper operates optionally. When active, it targets DigitalOcean's Gradient Inference endpoint (offering OpenAI endpoint compatibility).
+The Intelligence Center works with any OpenAI-compatible endpoint. It defaults to **Google Gemini** in production and can be pointed at a local **Ollama** instance for fully private, offline operation.
 
-To enable full chat functionalities locally:
+### Option A — Google Gemini (Recommended for Production)
 
-1. Create a local environment file:
-   ```bash
-   cp .env.example .env.local
+1. Get a free API key at [aistudio.google.com](https://aistudio.google.com/apikey)
+2. Set in `.env.local`:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   GEMINI_MODEL=gemini-1.5-flash
    ```
 
-2. Input your inference key:
+### Option B — Local Ollama (Private, Offline)
+
+```bash
+# Pull and start a fast local model
+ollama run llama3.2:1b
+```
+
+Then in `.env.local`:
+```env
+GEMINI_BASE_URL=http://127.0.0.1:11434/v1
+GEMINI_API_KEY=ollama
+GEMINI_MODEL=llama3.2:1b
+```
+
+> **Note:** If no API key is configured, the Intelligence Center gracefully shows an "Offline" state. All core footprint logging, charts, and insights remain fully functional.
+
+---
+
+## Google Cloud Deployment
+
+CarbonTrackX is fully containerised and ships with a complete Google Cloud Run deployment pipeline. A single `git push` to `main` triggers an automated build and deploy.
+
+### Files Included
+
+| File | Purpose |
+|---|---|
+| `Dockerfile` | 3-stage build → minimal ~150 MB production image |
+| `cloudbuild.yaml` | Cloud Build: build → push to Container Registry → deploy to Cloud Run |
+| `.env.example` | Safe environment template for contributors |
+
+### Quick Deploy Steps
+
+1. **Push your code to GitHub**
+2. **Create a GCP project** at [console.cloud.google.com](https://console.cloud.google.com)
+3. **Enable APIs:**
    ```bash
-   DO_INFERENCE_API_KEY="your-gradient-key-here"
+   gcloud services enable run.googleapis.com cloudbuild.googleapis.com \
+     containerregistry.googleapis.com secretmanager.googleapis.com
+   ```
+4. **Store your API key in Secret Manager:**
+   ```bash
+   echo -n "your_gemini_api_key" | gcloud secrets create GEMINI_API_KEY --data-file=-
+   ```
+5. **Connect your GitHub repo** in Cloud Build → Triggers, pointing to `cloudbuild.yaml`
+6. **Push to `main`** — Cloud Build deploys automatically:
+   ```bash
+   git push origin main
+   # ✅ Live at https://carbontrackx-xxxxx-uc.a.run.app
    ```
 
-*Note: If no API key is specified, the assistant chat panel gracefully transitions to a demo mode, leaving all core footprint logging, history, charts, and rule calculators fully functional.*
+> Cloud Run scales to **zero instances** when idle — you only pay for actual requests. Free tier covers most personal projects.
+
+---
+
+## Testing Suite
+
+```bash
+npm run test            # Vitest unit tests
+npm run test:coverage   # Unit tests with coverage report
+npm run test:e2e        # Playwright E2E + Axe accessibility scans
+```
+
+Coverage areas include:
+- Deterministic emissions engine calculations
+- Insight rules and threshold evaluations
+- AI prompt construction and context grounding
+- SSE stream chunk parsing
+- API rate-limiter fixed-window logic
+- Zod schema validation on client + server
+- Component rendering (React Testing Library)
+- Full E2E browser flows (Playwright)
+- WCAG automated scans (Axe-Core)
+- State persistence across page reloads
+
+---
+
+## Accessibility (a11y) Implementation
+
+Built to WCAG 2.1 AA, validated by automated Axe-Core audits:
+
+- **Strict Contrast:** WCAG AA 4.5:1 ratio across all foreground/background combinations
+- **Semantic HTML:** One `<h1>` per page, descending `<h2>`/`<h3>` hierarchy
+- **ARIA Landmarks:** `<main>`, `<nav>`, `<header>` explicitly defined
+- **Keyboard Skip-to-Content:** Hidden anchor bypassing navigation for keyboard users
+- **Focus Trapping:** Dialog modals trap focus while open, restored on close
+- **Focus Visible:** High-contrast rings on all interactive elements
+- **Reduced Motion:** All animations respect `prefers-reduced-motion: reduce`
+- **Screen Reader Labels:** All form controls use explicit `<label>` bindings
+- **ARIA Live Regions:** Chat transcript uses `aria-live="polite"` for streaming updates
+- **Touch Targets:** Minimum 44×44px interactive areas for mobile usability
+- **Color-Agnostic Cues:** Statuses use both color and semantic icons (never color alone)
+
+---
+
+## Security Hardening
+
+- **Server-Side Key Protection:** `GEMINI_API_KEY` locked to server environments via `server-only` directive — never exposed in the client bundle
+- **Strict CSP:** Content-Security-Policy limits script execution and restricts fetch origins
+- **HSTS:** Forces encrypted connections on all routes
+- **Cross-Origin Isolation:** COEP + COOP headers mitigate side-channel attacks
+- **Feature Permissions Policy:** Disables camera, microphone, and geolocation by default
+- **API Rate Limiting:** Fixed-window throttle on `/api/assistant` to block abuse
+- **Zod Validation:** Schema-bound validation on both client and server API boundaries
+- **HTML Sanitization:** Strips `<script>` tags and encoded payloads (XSS prevention)
+- **Payload Size Limits:** Oversized requests dropped at the API boundary (DoS protection)
+- **Local-First Architecture:** Telemetry stays in the user's own `localStorage` — no central database
+- **Secret Manager Integration:** Production secrets stored in GCP Secret Manager, never in code or env files committed to git
+- **No Analytics Tracking:** Zero third-party pixels, ad scripts, or tracking cookies

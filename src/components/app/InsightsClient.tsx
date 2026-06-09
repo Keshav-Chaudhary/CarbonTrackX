@@ -6,40 +6,11 @@ import { BENCHMARKS } from "@/lib/insights/analyze";
 import { useFootprint } from "@/components/app/useFootprint";
 import { PageHeader } from "@/components/app/PageHeader";
 import { InsightList } from "@/components/app/InsightList";
-import { EmptyState } from "@/components/app/EmptyState";
 import {
   formatKg,
 } from "@/components/ui";
 import { PageSkeleton } from "@/components/app/Skeletons";
 
-/** A labelled comparison row used in the "where you stand" card. */
-function CompareRow({
-  icon: Icon,
-  label,
-  value,
-  detail,
-}: {
-  icon: typeof Globe;
-  label: string;
-  value: string;
-  detail: string;
-}) {
-  return (
-    <div className="flex items-center gap-3 py-3">
-      <span
-        aria-hidden="true"
-        className="flex size-9 shrink-0 items-center justify-center rounded-[var(--r-md)] bg-surface-3"
-      >
-        <Icon className="size-4 text-fg-muted" />
-      </span>
-      <div className="flex-1">
-        <p className="text-sm text-fg-muted">{label}</p>
-        <p className="tnum font-semibold text-fg">{value}</p>
-      </div>
-      <p className="text-right text-sm text-fg-subtle">{detail}</p>
-    </div>
-  );
-}
 
 export function InsightsClient() {
   const { hydrated, analysis, activityCount } = useFootprint();
@@ -60,7 +31,7 @@ export function InsightsClient() {
           Awaiting your first logs...
         </h1>
         <p className="max-w-md text-lg text-fg-subtle mb-10 leading-relaxed">
-          We need a little bit of data to generate personalized recommendations. Once you log a few activities, we'll surface the highest-impact ways to cut your emissions.
+          We need a little bit of data to generate personalized recommendations. Once you log a few activities, we&apos;ll surface the highest-impact ways to cut your emissions.
         </p>
         
         <Link

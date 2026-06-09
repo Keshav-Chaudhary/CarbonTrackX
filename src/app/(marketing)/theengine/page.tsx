@@ -54,7 +54,7 @@ export default function EnginePage() {
             </span>
             <h2 className="text-2xl font-bold text-fg">Deterministic Math</h2>
             <p className="mt-3 text-fg-muted leading-relaxed">
-              Every log you submit runs through a strict, unchanging formula. We take what you did and multiply it by scientific constants to get your footprint. It's perfectly auditable.
+              Every log you submit runs through a strict, unchanging formula. We take what you did and multiply it by scientific constants to get your footprint. It&apos;s perfectly auditable.
             </p>
             <div className="mt-6 rounded-xl border border-[var(--border-strong)] bg-surface-1 p-4 font-mono text-sm text-[var(--accent)] shadow-inner text-center font-bold">
               Total Impact = Activity Volume × Scientific Factor

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import {
-  Settings,
   Palette,
   Database,
   Target,
@@ -11,7 +10,6 @@ import {
   Download,
   ShieldCheck,
   Info,
-  ChevronRight,
   Moon,
   Sun,
   SlidersHorizontal,
@@ -101,10 +99,6 @@ export function SettingsClient() {
   );
   const [showClearDialog, setShowClearDialog] = useState(false);
 
-  const totalKg = activities.reduce((sum, a) => {
-    const factor = a.quantity; // raw quantity; approximate for display
-    return sum + factor;
-  }, 0);
 
   function handleSaveGoal() {
     const val = parseFloat(goalInput);

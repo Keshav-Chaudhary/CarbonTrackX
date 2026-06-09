@@ -19,11 +19,7 @@ import { ActivityList } from "@/components/app/ActivityList";
 import { GoalSetter } from "@/components/app/GoalSetter";
 import {
   Button,
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  CardDescription,
+
   Dialog,
   Select,
   useToast,
@@ -258,7 +254,7 @@ export function LogClient() {
       downloadAnchor.click();
       downloadAnchor.remove();
       toast("Telemetry ledger exported successfully.");
-    } catch (err) {
+    } catch {
       toast("Failed to export telemetry data.", "error");
     }
   };
@@ -292,13 +288,20 @@ export function LogClient() {
         let successCount = 0;
         let failCount = 0;
 
-        importedActivities.forEach((act: any) => {
-          if (act.factorId && typeof act.quantity === "number" && act.date) {
+        type ImportedActivity = {
+          factorId?: string;
+          quantity?: number;
+          date?: string;
+          note?: string;
+        };
+
+        importedActivities.forEach((act: ImportedActivity) => {
+          if (typeof act.factorId === "string" && typeof act.quantity === "number" && typeof act.date === "string") {
             const res = addActivity({
               factorId: act.factorId,
               quantity: act.quantity,
               date: act.date,
-              note: act.note,
+              note: typeof act.note === "string" ? act.note : undefined,
             });
             if (res.ok) successCount++;
             else failCount++;
@@ -315,7 +318,7 @@ export function LogClient() {
           `Import complete. Success: ${successCount}. Failures/Skipped: ${failCount}.`,
           failCount > 0 ? "error" : "info"
         );
-      } catch (err) {
+      } catch {
         toast("Failed to parse JSON file.", "error");
       }
     };
@@ -565,7 +568,7 @@ export function LogClient() {
                     fadeTip ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
                   }`}
                 >
-                  "{ECO_TIPS[currentTipIndex]}"
+                  &quot;{ECO_TIPS[currentTipIndex]}&quot;
                 </p>
               </div>
             </div>

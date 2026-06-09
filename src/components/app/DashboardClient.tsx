@@ -18,15 +18,11 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { StatCard } from "@/components/app/StatCard";
 import { InsightList } from "@/components/app/InsightList";
 import { ActivityList } from "@/components/app/ActivityList";
-import { EmptyState } from "@/components/app/EmptyState";
+
 import { BreakdownChart } from "@/components/charts/BreakdownChart";
 import { TrendChart } from "@/components/charts/TrendChart";
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  CardDescription,
+
   formatKg,
 } from "@/components/ui";
 import { DashboardSkeleton } from "@/components/app/Skeletons";
@@ -52,7 +48,7 @@ export function DashboardClient() {
           Ready to track your footprint?
         </h1>
         <p className="max-w-md text-lg text-fg-muted mb-10 leading-relaxed">
-          You haven't logged any activities yet. Start by recording a commute, meal, or energy usage to unlock your insights.
+          You haven&apos;t logged any activities yet. Start by recording a commute, meal, or energy usage to unlock your insights.
         </p>
         
         <Link

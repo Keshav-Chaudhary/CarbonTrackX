@@ -75,7 +75,7 @@ export function AssistantChat() {
           AI Assistant offline
         </h1>
         <p className="max-w-md text-lg text-fg-subtle mb-10 leading-relaxed">
-          The AI capabilities haven't been configured for this deployment yet. Don't worry though—your dashboard and insights will continue to work perfectly using local data.
+          The AI capabilities haven&apos;t been configured for this deployment yet. Don&apos;t worry though—your dashboard and insights will continue to work perfectly using local data.
         </p>
         
         <div className="inline-flex h-14 items-center justify-center gap-3 rounded-[var(--r-xl)] bg-surface-3 border border-[var(--border-strong)] px-8 text-base font-bold text-fg-muted shadow-sm opacity-60 cursor-not-allowed">
@@ -137,7 +137,7 @@ export function AssistantChat() {
       )}
       <Button
         type="submit"
-        size={isHero ? "default" : "sm"}
+        size={isHero ? "md" : "sm"}
         disabled={streaming || enabled === null || input.trim() === ""}
         aria-label="Send message"
         className={cn(

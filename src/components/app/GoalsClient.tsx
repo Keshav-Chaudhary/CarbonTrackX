@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { GoalSetter } from "@/components/app/GoalSetter";
 import { DashboardSkeleton } from "@/components/app/Skeletons";
 import { ProgressRing, formatKg } from "@/components/ui";
-import { Trophy, TrendingDown, Target, Clock } from "lucide-react";
+import { Trophy, TrendingDown } from "lucide-react";
 import { BENCHMARKS } from "@/lib/insights/analyze";
 import { dailyTotals } from "@/lib/emissions/calculate";
 

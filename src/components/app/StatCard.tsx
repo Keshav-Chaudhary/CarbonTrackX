@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, type LucideIcon } from "lucide-react";
-import { Card } from "@/components/ui";
+
 import { cn } from "@/lib/cn";
 
 interface StatCardProps {

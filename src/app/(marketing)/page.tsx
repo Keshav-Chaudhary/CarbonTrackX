@@ -11,7 +11,6 @@ import {
   Database,
   Lock,
 } from "lucide-react";
-import { EMISSION_FACTORS } from "@/lib/emissions/factors";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 const CATEGORIES = [
@@ -96,7 +95,7 @@ export default function LandingPage() {
                     <span className="text-[10px] font-bold uppercase tracking-widest text-fg-muted">AI Coach</span>
                   </div>
                   <p className="text-sm font-medium text-fg leading-relaxed">
-                    "Your daily average is dropping. Great job substituting <span className="text-[var(--accent)]">red meat</span>!"
+                    &quot;Your daily average is dropping. Great job substituting <span className="text-[var(--accent)]">red meat</span>!&quot;
                   </p>
                 </div>
 
