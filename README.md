@@ -306,6 +306,26 @@ CarbonTrackX is fully containerised and ships with a complete Google Cloud Run d
 
 > Cloud Run scales to **zero instances** when idle — you only pay for actual requests. Free tier covers most personal projects.
 
+### Common Deployment Troubleshooting (Gotchas)
+
+If you run into issues while deploying or updating the app via Google Cloud Shell, check these common pitfalls:
+
+1. **Nested Clones Failing the Build:** 
+   If you accidentally run `git clone` while already inside the `CarbonTrackX` directory in Google Cloud Shell, you will create a nested folder (e.g. `CarbonTrackX/CarbonTrackX`). Cloud Build's TypeScript compiler (`tsc`) will scan this nested folder, and any outdated code inside it will cause "Cannot find module" errors and instantly fail the build. 
+   **Fix:** Run `rm -rf CarbonTrackX/` to delete the nested folder, ensure your working directory is clean, and redeploy.
+
+2. **Git Pull Aborting due to untracked files:**
+   Sometimes auto-generated files (like `public/.gitkeep`) can prevent `git pull origin main` from succeeding in your Cloud Shell, throwing a "would be overwritten by merge" error. If `git pull` aborts, `gcloud run deploy` will deploy your old, stale code!
+   **Fix:** Delete the conflicting file (e.g., `rm public/.gitkeep`) or run `git reset --hard origin/main` to force sync before deploying.
+
+3. **"Old Website" Showing After Successful Deploy (PWA Caching):**
+   If your Cloud Run deploy succeeded but your browser still shows the old UI, it is almost certainly due to aggressive browser Service Worker caching.
+   **Fix:** Open Chrome DevTools (`F12`) → Application Tab → Storage → Click "Clear site data". Hard refresh the page (`Ctrl+F5`) to fetch the fresh deployment from the server.
+
+4. **GitHub Actions / CI Linting Failures on Public Assets:**
+   If your CI pipeline fails on `npm run lint` complaining about `@ts-ignore` in `workbox-*.js` or `sw.js`, it means ESLint is trying to lint auto-generated Service Worker files.
+   **Fix:** Ensure `"public/**"` is added to the `globalIgnores` array in your `eslint.config.mjs` file to bypass static assets.
+
 ---
 
 ## Testing Suite
