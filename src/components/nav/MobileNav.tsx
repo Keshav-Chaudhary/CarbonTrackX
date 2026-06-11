@@ -20,7 +20,7 @@ export function MobileNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border)] bg-bg-subtle/95 backdrop-blur md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border)] bg-bg-subtle/95 backdrop-blur md:hidden pb-[env(safe-area-inset-bottom)]"
     >
       <ul className="flex items-stretch justify-around">
         {APP_NAV.map((item) => {

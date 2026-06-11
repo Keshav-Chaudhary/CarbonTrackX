@@ -4,7 +4,7 @@ import { ActivityList } from "@/components/app/activity/ActivityList";
 
 export function DashboardInsights() {
   return (
-    <div className="mt-4 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
+    <div className="mt-4 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex items-center justify-between border-b border-[var(--border-faint)] pb-4 mb-4">
           <div>

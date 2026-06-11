@@ -26,7 +26,7 @@ export function FilterDeck({
   setImpactFilter,
 }: FilterDeckProps) {
   return (
-    <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 p-4 bg-surface-3 border-b border-[var(--border-faint)]">
+    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 pt-2 pb-6 border-b border-[var(--border-faint)]">
       {/* Search */}
       <div className="relative">
         <Search className="absolute left-2.5 top-2.5 size-4 text-fg-subtle" />

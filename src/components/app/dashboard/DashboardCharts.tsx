@@ -28,7 +28,7 @@ export function DashboardCharts({
     <>
       {/* Top Row: Trend Chart & Goal Progress */}
       <div className="grid gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
+        <div className="lg:col-span-2 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
           <div className="absolute top-0 right-0 p-6 pointer-events-none opacity-10 transition-all group-hover:scale-110 group-hover:opacity-20">
             <Activity className="size-32 text-[var(--accent)]" />
           </div>
@@ -58,7 +58,7 @@ export function DashboardCharts({
           />
         </div>
 
-        <div className="lg:col-span-1 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col">
+        <div className="lg:col-span-1 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col">
           <div className="relative z-10 flex flex-col h-full">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-fg">Sector Allocation</h2>
@@ -78,7 +78,7 @@ export function DashboardCharts({
 
 function GoalProgressCard({ analysis, target, goalPct }: { analysis: FootprintAnalysis; target: number; goalPct: number }) {
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col justify-between">
+    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col justify-between">
       <div className="absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-[var(--accent-subtle)] blur-[40px] opacity-0 transition-all group-hover:scale-150 group-hover:opacity-100" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-6">

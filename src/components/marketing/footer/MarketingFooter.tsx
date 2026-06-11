@@ -73,7 +73,7 @@ export function MarketingFooter() {
               <Link href="#" className="text-sm font-medium text-fg-subtle transition-colors hover:text-[var(--accent)]">API Documentation</Link>
               <Link href="#" className="text-sm font-medium text-fg-subtle transition-colors hover:text-[var(--accent)]">Webhooks</Link>
               <Link href="#" className="text-sm font-medium text-fg-subtle transition-colors hover:text-[var(--accent)]">Telemetry Specs</Link>
-              <Link href="#" className="text-sm font-medium text-fg-subtle transition-colors hover:text-[var(--accent)]">Open Source</Link>
+              <Link href="https://github.com/Keshav-Chaudhary/CarbonTrackX" className="text-sm font-medium text-fg-subtle transition-colors hover:text-[var(--accent)]">Open Source</Link>
             </nav>
           </div>
 
@@ -102,7 +102,7 @@ export function MarketingFooter() {
             <Link aria-label="Website" href="#" className="text-fg-muted hover:text-[var(--accent)] transition-transform hover:scale-110">
               <Globe className="size-5" />
             </Link>
-            <Link aria-label="Source Code" href="#" className="text-fg-muted hover:text-[var(--accent)] transition-transform hover:scale-110">
+            <Link aria-label="Source Code" href="https://github.com/Keshav-Chaudhary/CarbonTrackX" className="text-fg-muted hover:text-[var(--accent)] transition-transform hover:scale-110">
               <Code2 className="size-5" />
             </Link>
             <Link aria-label="Email Us" href="#" className="text-fg-muted hover:text-[var(--accent)] transition-transform hover:scale-110">

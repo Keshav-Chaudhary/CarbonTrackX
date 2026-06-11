@@ -53,7 +53,7 @@ export function LogContent({
 }: LogContentProps) {
   return (
     <div className="lg:col-span-7 flex flex-col gap-6">
-      <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col">
+      <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] flex flex-col">
         <div className="relative z-10 flex flex-col h-full">
           <div className="mb-6 flex flex-row items-center justify-between border-b border-[var(--border-faint)] pb-4">
             <div className="flex items-center gap-3">

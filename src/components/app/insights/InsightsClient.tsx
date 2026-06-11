@@ -55,7 +55,7 @@ export function InsightsClient() {
         description="Our deterministic engine processes your activity logs to give you actionable, mathematically sound advice on reducing your footprint."
       />
 
-      <div className="mb-10 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
+      <div className="mb-10 group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-fg">Your Baseline</h2>
           <p className="mt-1 text-sm text-fg-muted">

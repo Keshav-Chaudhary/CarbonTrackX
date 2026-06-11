@@ -20,7 +20,7 @@ export function EcoTipCard() {
   }, []);
 
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
+    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)]">
       <div className="absolute right-0 top-0 h-32 w-32 -translate-y-1/2 translate-x-1/2 rounded-full bg-[var(--accent-subtle)] blur-[40px] pointer-events-none transition-all group-hover:scale-150" />
       <div className="relative z-10 flex flex-col h-full">
         <div className="mb-4 flex items-center gap-2">

@@ -28,7 +28,7 @@ export function LogTable({
     <>
       {/* Bulk Selection Actions */}
       {filteredActivities.length > 0 && (
-        <div className="flex items-center justify-between gap-4 p-3 bg-surface-3 border-b border-[var(--border-faint)] text-sm">
+        <div className="flex items-center justify-between gap-4 py-3 border-b border-[var(--border-faint)] text-sm">
           <label className="flex items-center gap-2 cursor-pointer select-none text-fg-subtle">
             <input
               type="checkbox"

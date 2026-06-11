@@ -56,7 +56,7 @@ export function ActivityList({
             className={`group flex items-center gap-4 rounded-xl border px-4 py-3 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] ${
               isSelected
                 ? "border-[var(--accent-line)] bg-[var(--accent-subtle)]"
-                : "border-[var(--border-faint)] bg-surface-3"
+                : "border-[var(--border-faint)] bg-surface-1"
             }`}
           >
             {onToggleSelect && (

@@ -38,7 +38,7 @@ export function GoalSetter() {
   }
 
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] h-full flex flex-col">
+    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] h-full flex flex-col">
       <div className="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-[var(--accent-subtle)] blur-[40px] opacity-0 transition-all group-hover:scale-150 group-hover:opacity-100" />
       <div className="relative z-10 flex-1 flex flex-col">
         <div className="flex items-center gap-4 mb-6 border-b border-[var(--border-faint)] pb-6">

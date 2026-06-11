@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
  */
 export function MobileHeader() {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[var(--border)] bg-bg-subtle/95 px-4 backdrop-blur md:hidden">
+    <header className="w-full sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[var(--border)] bg-bg-subtle/95 px-4 backdrop-blur md:hidden">
       <Logo href="/app" />
       <ThemeToggle />
     </header>

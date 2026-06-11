@@ -79,8 +79,8 @@ export function ActivityForm({ onLogged, initialData }: { onLogged?: () => void,
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-      <div className="rounded-xl border border-[var(--border-strong)] bg-surface-1 p-5 shadow-inner flex flex-col gap-5">
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5 min-w-0">
+      <div className="rounded-xl border border-[var(--border-strong)] bg-surface-1 p-5 shadow-inner flex flex-col gap-5 min-w-0">
         <Field label="What did you do?" hint={factor?.hint}>
           {({ id, "aria-describedby": describedBy }) => (
             <Select

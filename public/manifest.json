@@ -1,0 +1,10 @@
+{
+  "name": "CarbonTrackX",
+  "short_name": "CTx",
+  "description": "Deterministic personal climate companion.",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#0b110e",
+  "theme_color": "#15221b",
+  "icons": []
+}

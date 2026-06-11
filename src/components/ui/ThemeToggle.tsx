@@ -28,8 +28,8 @@ export function ThemeToggle({ className }: { className?: string }) {
         className={cn(
           "absolute top-0.5 h-[calc(100%-4px)] w-[calc(50%-2px)] rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
           theme === "dark"
-            ? "left-0.5 bg-[var(--accent)] shadow-[0_0_8px_var(--accent)]"
-            : "left-[calc(50%+1px)] bg-[var(--surface-2,#fff)] shadow-sm",
+            ? "left-0.5 bg-[var(--accent-subtle)] border border-[var(--accent-line)] shadow-none"
+            : "left-[calc(50%+1px)] bg-[var(--surface-2,#fff)] shadow-sm border border-transparent",
         )}
       />
       {/* Moon icon — left slot */}
@@ -37,7 +37,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         aria-hidden="true"
         className={cn(
           "relative z-10 flex w-1/2 items-center justify-center transition-all duration-300",
-          theme === "dark" ? "text-[#ffffff]" : "text-fg-muted",
+          theme === "dark" ? "text-[var(--accent)]" : "text-fg-muted",
         )}
       >
         <Moon className="size-3.5" />

@@ -42,7 +42,7 @@ export function Field({
   const describedBy = error ? errorId : hint ? hintId : undefined;
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex flex-col gap-1.5 min-w-0", className)}>
       <label
         htmlFor={id}
         className={cn(

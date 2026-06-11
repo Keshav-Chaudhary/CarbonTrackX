@@ -29,7 +29,7 @@ export function StatCard({
     (delta.goodWhenNegative ?? true ? delta.value <= 0 : delta.value >= 0);
 
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] h-full flex flex-col justify-center">
+    <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-faint)] bg-surface-2 p-5 sm:p-8 shadow-[var(--shadow-sm)] transition-all hover:border-[var(--accent-line)] hover:shadow-[var(--shadow-md)] h-full flex flex-col justify-center">
       <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--accent-subtle)] blur-[40px] opacity-0 transition-transform group-hover:scale-150 group-hover:opacity-100 pointer-events-none" />
       <div className="relative z-10 flex items-center justify-between mb-4">
         <p className="text-sm font-bold uppercase tracking-widest text-fg-muted">{label}</p>
