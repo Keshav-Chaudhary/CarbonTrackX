@@ -18,6 +18,8 @@ const eslintConfig = defineConfig([
     "test-results/**",
     // Scratch scripts used for local diagnostics only.
     "scratch/**",
+    // Public generated assets (like service workers)
+    "public/**",
   ]),
 ]);
 
