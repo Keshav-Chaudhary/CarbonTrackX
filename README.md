@@ -34,8 +34,85 @@ We are proud to share that CarbonTrackX achieves a perfect **100/100** score in 
 
 ---
 
+## Interface Previews (Desktop & Mobile)
+
+Here are the side-by-side desktop and mobile screenshot previews for all pages in the application. Desktop views are shown on the left, and mobile views are shown on the right.
+
+<details open>
+<summary><b>📷 Click to Expand/Collapse Previews Gallery</b></summary>
+<br>
+
+### 1. Landing Page (`/`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/home_desktop.png" alt="Landing Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/home_mobile.png" alt="Landing Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+### 2. User Dashboard (`/app`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/dashboard_desktop.png" alt="Dashboard Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/dashboard_mobile.png" alt="Dashboard Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+### 3. Telemetry Logger (`/app/log`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/log_desktop.png" alt="Log Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/log_mobile.png" alt="Log Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+### 4. "Commit to Change" Insights (`/app/insights`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/insights_desktop.png" alt="Insights Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/insights_mobile.png" alt="Insights Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+### 5. AI Intelligence Center (`/app/assistant`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/assistant_desktop.png" alt="AI Assistant Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/assistant_mobile.png" alt="AI Assistant Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+### 6. Settings & Privacy (`/app/settings`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/settings_desktop.png" alt="Settings Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/settings_mobile.png" alt="Settings Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+### 7. About Page (`/about`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/about_desktop.png" alt="About Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/about_mobile.png" alt="About Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+### 8. Under The Hood - The Engine (`/theengine`)
+<table>
+  <tr>
+    <td width="70%"><img src="./public/screenshots/theengine_desktop.png" alt="The Engine Page - Desktop" style="border-radius: 8px;" /></td>
+    <td width="30%"><img src="./public/screenshots/theengine_mobile.png" alt="The Engine Page - Mobile" style="border-radius: 8px;" /></td>
+  </tr>
+</table>
+
+</details>
+
+---
+
 ## Table of Contents
 
+- [Interface Previews (Desktop & Mobile)](#interface-previews-desktop--mobile)
 - [Key Features](#key-features)
 - [System Architecture & Flow](#system-architecture--flow)
 - [Tech Stack & Technical Rationale](#tech-stack--technical-rationale)
@@ -237,6 +314,7 @@ npm run lint         # ESLint audit
 npm run typecheck    # TypeScript check (no emit)
 npm run test         # Vitest unit tests
 npm run test:e2e     # Playwright E2E + accessibility scans
+npx playwright test e2e/screenshot.spec.ts # Generate desktop & mobile previews
 ```
 
 ---
@@ -334,6 +412,7 @@ If you run into issues while deploying or updating the app via Google Cloud Shel
 npm run test            # Vitest unit tests
 npm run test:coverage   # Unit tests with coverage report
 npm run test:e2e        # Playwright E2E + Axe accessibility scans
+npx playwright test e2e/screenshot.spec.ts  # Generate desktop & mobile previews for README
 ```
 
 Coverage areas include:
