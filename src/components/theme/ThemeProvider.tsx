@@ -6,6 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
+import { useServerInsertedHTML } from "next/navigation";
 
 export type Theme = "dark" | "light";
 
@@ -22,7 +23,7 @@ export const THEME_STORAGE_KEY = "carbon-theme";
 /**
  * Inline script run before paint to set `data-theme` from storage (or system
  * preference), preventing a flash of the wrong theme. Injected in the document
- * head via `dangerouslySetInnerHTML`.
+ * head via `useServerInsertedHTML`.
  */
 export const themeInitScript = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}');if(!t){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
 
@@ -35,6 +36,15 @@ function readAppliedTheme(): Theme {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  useServerInsertedHTML(() => {
+    return (
+      <script
+        id="theme-initializer"
+        dangerouslySetInnerHTML={{ __html: themeInitScript }}
+      />
+    );
+  });
+
   const [theme, setThemeState] = useState<Theme>(readAppliedTheme);
 
   const setTheme = useCallback((next: Theme) => {

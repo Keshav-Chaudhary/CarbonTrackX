@@ -17,13 +17,13 @@ export function MarketingFooter() {
             <h3 className="text-2xl font-bold text-fg">Stay connected to the core.</h3>
             <p className="mt-2 text-fg-muted leading-relaxed">Subscribe to our technical changelog and telemetry updates. No marketing spam, strictly shipping updates.</p>
           </div>
-          <div className="flex w-full max-w-md items-center gap-3">
+          <div className="flex w-full max-w-md flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <input 
               type="email" 
               placeholder="Enter your email address" 
               className="flex-1 h-12 rounded-xl border border-[var(--border-strong)] bg-surface px-4 text-sm text-fg !outline-none transition-colors focus:border-[var(--accent)]"
             />
-            <button className="flex h-12 items-center justify-center rounded-xl bg-fg px-6 text-sm font-bold text-bg transition-transform hover:scale-105 active:scale-95 shadow-[var(--shadow-sm)]">
+            <button className="flex h-12 items-center justify-center rounded-xl bg-fg px-6 text-sm font-bold text-bg transition-transform hover:scale-105 active:scale-95 shadow-[var(--shadow-sm)] shrink-0">
               Subscribe
             </button>
           </div>

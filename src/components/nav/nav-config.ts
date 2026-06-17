@@ -7,6 +7,7 @@ import {
   Settings,
   Zap,
   BookOpen,
+  User,
   type LucideIcon,
 } from "lucide-react";
 
@@ -68,4 +69,5 @@ export const APP_NAV: NavItem[] = [
 export const INFO_NAV = [
   { href: "/theengine", label: "The Engine", icon: Zap },
   { href: "/about", label: "About", icon: BookOpen },
+  { href: "/developer", label: "Developer", icon: User },
 ];

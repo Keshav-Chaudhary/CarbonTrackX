@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider, themeInitScript } from "@/components/theme/ThemeProvider";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { ToastProvider } from "@/components/ui/toast/Toast";
 
 const outfit = Outfit({
@@ -51,10 +51,6 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <head>
-        {/* Set theme before paint to avoid a flash of the wrong colour scheme. */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
       <body className="min-h-full">
         <a href="#main" className="skip-link">
           Skip to main content

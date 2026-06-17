@@ -106,21 +106,21 @@ export function Sidebar() {
         </div>
       </nav>
 
-      <div className="p-4 border-t border-[var(--border-faint)] bg-surface-2 mt-auto">
-        <ul className="flex flex-col gap-1.5">
+      <div className="p-3 border-t border-[var(--border-faint)] bg-surface-2 mt-auto">
+        <ul className="flex flex-col gap-1">
           {INFO_NAV.map((item) => {
             const Icon = item.icon;
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-fg-muted transition-all hover:bg-surface-3 hover:text-fg"
+                  className="group flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-fg-muted transition-all hover:bg-surface-3 hover:text-fg"
                 >
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-surface-3 border border-[var(--border)] group-hover:text-[var(--accent)] group-hover:border-[var(--accent)] transition-colors shadow-sm">
-                    <Icon aria-hidden="true" className="size-3.5 transition-transform group-hover:scale-110" />
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-surface-3 border border-[var(--border)] group-hover:text-[var(--accent)] group-hover:border-[var(--accent)] transition-colors shadow-sm">
+                    <Icon aria-hidden="true" className="size-3 transition-transform group-hover:scale-110" />
                   </span>
                   <span className="transition-opacity duration-300 whitespace-nowrap opacity-0 group-hover:opacity-100">{item.label}</span>
-                  <SquareArrowOutUpRight aria-hidden="true" className="ml-auto size-3.5 text-fg-subtle transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] opacity-0 group-hover:opacity-100" />
+                  <SquareArrowOutUpRight aria-hidden="true" className="ml-auto size-3 text-fg-subtle transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--accent)] opacity-0 group-hover:opacity-100" />
                 </Link>
               </li>
             );
